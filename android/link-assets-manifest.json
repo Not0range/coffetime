@@ -1,0 +1,33 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "resources/fonts/Lobster-Regular.ttf",
+      "sha1": "42c276b0639e40f529755313253e14a6e5d3fe6a"
+    },
+    {
+      "path": "resources/fonts/Roboto-Bold.ttf",
+      "sha1": "62442a18a9fe9457c1afeabf683d263a691b7798"
+    },
+    {
+      "path": "resources/fonts/Roboto-Light.ttf",
+      "sha1": "18788c5d630fa695f9283f6393bfa541b2031508"
+    },
+    {
+      "path": "resources/fonts/Roboto-Regular.ttf",
+      "sha1": "0c3e35cbff190adb472f077e0259cf9af73ad430"
+    },
+    {
+      "path": "resources/fonts/SF-UI-Text-Bold.otf",
+      "sha1": "82c72b8f419e2801c921e4add7d11f4143da06b6"
+    },
+    {
+      "path": "resources/fonts/SF-UI-Text-Light.otf",
+      "sha1": "b9241af921b62b9c3c2091931bbdb18698ec86c1"
+    },
+    {
+      "path": "resources/fonts/SF-UI-Text-Regular.otf",
+      "sha1": "5578b5e908e0ace512e7f970509dc2a5edb880c8"
+    }
+  ]
+}

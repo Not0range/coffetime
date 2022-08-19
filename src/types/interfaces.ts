@@ -1,0 +1,1 @@
+export type AvailableLanguages = "ru" | "en";
