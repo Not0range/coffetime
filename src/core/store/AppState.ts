@@ -10,8 +10,8 @@ export interface IAppState {
 
 export function getAppInitialState(): IAppState {
   return {
-      system: SystemInitialState,
-      entities: EntitiesInitialState,
-      login: LoginInitialState
+    system: SystemInitialState,
+    entities: EntitiesInitialState,
+    login: LoginInitialState
   };
 }

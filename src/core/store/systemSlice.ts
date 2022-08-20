@@ -4,15 +4,15 @@ import { IAppState } from './AppState';
 import { CoreActions } from './coreActions';
 
 export interface ISystemState {
-    buildNumber: number;
-    authToken: string | null;
-    refreshToken: string | null;
+  buildNumber: number;
+  authToken: string | null;
+  refreshToken: string | null;
 }
 
 export const SystemInitialState: ISystemState = {
-    authToken: null,
-    refreshToken: null,
-    buildNumber: 1,
+  authToken: null,
+  refreshToken: null,
+  buildNumber: 1,
 };
 
 export const systemSlice = createSlice({

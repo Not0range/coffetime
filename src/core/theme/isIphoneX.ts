@@ -1,4 +1,4 @@
-import {Dimensions, Platform, PlatformIOSStatic} from "react-native";
+import { Dimensions, Platform, PlatformIOSStatic } from "react-native";
 
 let isIphoneXValue: boolean | null;
 
@@ -14,9 +14,9 @@ export function isIphoneX(): boolean {
         isIphoneXValue =
             Platform.OS == "ios" && !(Platform as PlatformIOSStatic).isPad
             && (((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH)
-            || (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))
-            || ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH)
-            || (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)));
+                || (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))
+                || ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH)
+                    || (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)));
     }
 
     return isIphoneXValue;

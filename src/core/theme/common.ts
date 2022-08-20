@@ -1,5 +1,5 @@
-import {Appearance, Dimensions, PixelRatio, Platform, StatusBar, useColorScheme} from "react-native";
-import {isIphoneX as isIphoneXFunc} from "./isIphoneX";
+import { Appearance, Dimensions, PixelRatio, Platform, StatusBar, useColorScheme } from "react-native";
+import { isIphoneX as isIphoneXFunc } from "./isIphoneX";
 
 const windowDimensions = Dimensions.get("window");
 export const isIos = Platform.OS == "ios";
@@ -13,11 +13,11 @@ export const isAndroidAndLollipopOrHigher = Platform.OS == "android" && Platform
 export const windowWidth = windowDimensions.width;
 export const windowHeight = windowDimensions.height - (!isIos ? StatusBar.currentHeight || 0 : 0);
 
-export const screenTabInitialLayout = {height: 0, width: windowWidth};
+export const screenTabInitialLayout = { height: 0, width: windowWidth };
 export const menuWidth = windowWidth - windowWidth * 0.2;
 
-export const hitSlop = {top: 10, bottom: 10, left: 10, right: 10};
-export const hitSlopBig = {top: 20, bottom: 20, left: 20, right: 20};
+export const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
+export const hitSlopBig = { top: 20, bottom: 20, left: 20, right: 20 };
 
 export const pixelRatio = PixelRatio.get();
 export const tabBarHeight = isIphoneX || isIpad ? 65 : 49;

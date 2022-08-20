@@ -12,11 +12,11 @@ import { BorderedImage } from "./BorderedImage";
 export const ProfileHeader: React.FC = () => {
   const loginType = useAppSelector(state => state.login.type);
   const profile = useAppSelector(state => state.entities.user);
-  const {name, photo_url} = profile || {name: localization.login.guest, photo_url: ""};
+  const { name, photo_url } = profile || { name: localization.login.guest, photo_url: "" };
   const picture: ImageURISource = photo_url ? { uri: photo_url } : user_picture();
   const viaText = loginType == LoginType.facebook ? `${localization.login.via} Facebook` :
     loginType == LoginType.vk ? `${localization.login.via} VK` : "";
-    
+
   return (
     <View style={styles.container}>
       <BorderedImage source={picture} style={styles.image} borderRadius={100} />

@@ -10,7 +10,7 @@ export function values<T extends Object>(object: T, removedKeys?: (keyof T)[]): 
     return result;
 }
 
-export function entries<T extends {[key: string]: any}>(object: T, removedKeys?: (keyof T)[]): [string, T[keyof T]][] {
+export function entries<T extends { [key: string]: any }>(object: T, removedKeys?: (keyof T)[]): [string, T[keyof T]][] {
     const result = [];
     const isHaveToRemove = removedKeys != null && removedKeys.length != 0;
     for (const key in object) {

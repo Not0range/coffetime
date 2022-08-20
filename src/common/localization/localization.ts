@@ -1,10 +1,10 @@
 import LocalizedStrings from "react-native-localization";
-import {dateLocalization} from "./dateLocalization";
-import {commonLocalization} from "./commonLocalization";
-import {pagesLocalization} from "./pagesLocalization";
-import {emptyLocalization} from "./emptyLocalization";
-import {errorsLocalization} from "./errorsLocalization";
-import {DateHelper} from "../helpers/DateHelper";
+import { dateLocalization } from "./dateLocalization";
+import { commonLocalization } from "./commonLocalization";
+import { pagesLocalization } from "./pagesLocalization";
+import { emptyLocalization } from "./emptyLocalization";
+import { errorsLocalization } from "./errorsLocalization";
+import { DateHelper } from "../helpers/DateHelper";
 import { loginLocalization } from "./loginLocalization";
 import { cafeLocalization } from "./cafeLocalization";
 

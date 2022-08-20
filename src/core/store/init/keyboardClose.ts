@@ -1,9 +1,9 @@
-import {Keyboard} from "react-native";
-import {applyMiddleware, Middleware, Dispatch} from "redux";
-import {ReduxStack} from "redux-stack";
-import {isType} from "typescript-fsa";
-import {CoreActions} from "../coreActions";
-import {isIos} from "../../theme";
+import { Keyboard } from "react-native";
+import { applyMiddleware, Middleware, Dispatch } from "redux";
+import { ReduxStack } from "redux-stack";
+import { isType } from "typescript-fsa";
+import { CoreActions } from "../coreActions";
+import { isIos } from "../../theme";
 
 function createMiddleware(): Middleware {
     let keyboardIsOpen = false;

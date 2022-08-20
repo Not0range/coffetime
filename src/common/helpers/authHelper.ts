@@ -1,12 +1,12 @@
-import {localization} from "../localization/localization";
+import { localization } from "../localization/localization";
 
 export class AuthHelper {
-    static checkAuthParams(params: {phone: string, password: string}): void {
+    static checkAuthParams(params: { phone: string, password: string }): void {
         const phone = this.isPhone(params.phone);
         const password = this.checkPassword(params.password);
 
         if (phone != null || password != null) {
-            throw {message: {phone: [phone], password: [password]}};
+            throw { message: { phone: [phone], password: [password] } };
         }
     }
 

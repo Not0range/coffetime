@@ -10,7 +10,7 @@ type Props = MaterialTopTabScreenProps<ShopsStackParamList, "Map">;
 export const Map: React.FC<Props> = (props: Props) => {
   return (
     <View style={CommonStyles.flex1}>
-      <Image style={{flex: 1}} source={ImageResources.map} />
+      <Image style={{ flex: 1 }} source={ImageResources.map} />
     </View>
   )
 }

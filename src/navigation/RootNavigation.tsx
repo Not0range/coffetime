@@ -1,5 +1,5 @@
 import React from "react";
-import {createStackNavigator} from '@react-navigation/stack'
+import { createStackNavigator } from '@react-navigation/stack'
 import { LoginPage } from "../modules/login/loginPage";
 import { RegistrationPage } from "../modules/registration/registrationPage";
 import { MainPage } from "./MainNavigation";
@@ -14,10 +14,10 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootNavigation: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name={"Login"} component={LoginPage} />
-        <Stack.Screen name={"Registration"} component={RegistrationPage} />
-        <Stack.Screen name={"MainPage"} component={MainPage} />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name={"Login"} component={LoginPage} />
+      <Stack.Screen name={"Registration"} component={RegistrationPage} />
+      <Stack.Screen name={"MainPage"} component={MainPage} />
     </Stack.Navigator>
   )
 }

@@ -1,3 +1,3 @@
-import {registerApp} from './src/registerApp'
+import { registerApp } from './src/registerApp'
 
 registerApp();

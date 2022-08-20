@@ -1,5 +1,5 @@
 import moment from "moment";
-import {localization} from "../localization/localization";
+import { localization } from "../localization/localization";
 /* tslint:disable:no-var-requires */
 require("moment/locale/ru");
 

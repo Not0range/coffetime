@@ -1,5 +1,5 @@
 /* tslint:disable */
-import {ImageURISource} from "react-native";
+import { ImageURISource } from "react-native";
 
 export class IconsResources {
     static readonly icon_facebook: ImageURISource = require("../../resources/images/icons/icon_facebook.png");

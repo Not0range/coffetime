@@ -16,8 +16,8 @@ export const CoffeeShopsList: React.FC = () => {
   )
 }
 
-const renderCafe = ({item}: {item: ICoffeeShop}): JSX.Element => {
+const renderCafe = ({ item }: { item: ICoffeeShop }): JSX.Element => {
   return (
-      <CoffeeShopItem title={item.title} address={item.address} image={item.image}/>
+    <CoffeeShopItem title={item.title} address={item.address} image={item.image} />
   )
 }

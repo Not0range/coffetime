@@ -11,7 +11,7 @@ interface IProps extends TouchableOpacityProps {
 }
 
 export const ButtonWithIcon: React.FC<IProps> = (props: IProps) => {
-  const style = !props.icon && !props.text ? [props.style, {paddingVertical: 30}] : [props.style];
+  const style = !props.icon && !props.text ? [props.style, { paddingVertical: 30 }] : [props.style];
   return (
     <TouchableOpacity
       style={style}

@@ -1,4 +1,4 @@
-import {ReduxLoggerOptions} from "redux-logger";
+import { ReduxLoggerOptions } from "redux-logger";
 
 export interface IAppSettings {
     appName: string;

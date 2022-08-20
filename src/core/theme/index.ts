@@ -1,4 +1,4 @@
-import {Colors} from "./colors";
+import { Colors } from "./colors";
 import {
     isDroid,
     isIos,
@@ -11,8 +11,8 @@ import {
     maxWindowDimension,
     isDarkTheme
 } from "./common";
-import {CommonStyles} from "./commonStyles";
-import {Fonts} from "./fonts";
+import { CommonStyles } from "./commonStyles";
+import { Fonts } from "./fonts";
 
 export {
     isDroid,

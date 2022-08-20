@@ -1,4 +1,4 @@
-import {AppRegistry} from "react-native";
+import { AppRegistry } from "react-native";
 import { App } from "./App";
 import { Playground } from "./common/Playground";
 import { appSettingsProvider } from "./core/settings";

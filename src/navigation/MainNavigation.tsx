@@ -22,8 +22,8 @@ export const MainPage: React.FC<Props> = (props: Props) => {
   return (
     <View style={CommonStyles.flex1}>
       <Drawer.Navigator screenOptions={headerOption} backBehavior="none" drawerContent={drawerContent}>
-        <Drawer.Screen name={"MapAndList"} component={MapAndList} options={{title: localization.pages.coffeeShops}} />
-        <Drawer.Screen name={"Test"} component={TestPage} options={{title: "Test"}} />
+        <Drawer.Screen name={"MapAndList"} component={MapAndList} options={{ title: localization.pages.coffeeShops }} />
+        <Drawer.Screen name={"Test"} component={TestPage} options={{ title: "Test" }} />
       </Drawer.Navigator>
     </View>
   )

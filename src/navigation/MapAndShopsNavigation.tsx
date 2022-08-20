@@ -21,7 +21,7 @@ export const MapAndList: React.FC = () => {
         <Tabs.Screen
           name="Map"
           component={Map}
-          options={{ tabBarIcon: mapIcon, swipeEnabled: false, lazy: false, tabBarStyle: tabOnTopStyle }} 
+          options={{ tabBarIcon: mapIcon, swipeEnabled: false, lazy: false, tabBarStyle: tabOnTopStyle }}
         />
         <Tabs.Screen
           name="ShopsList"

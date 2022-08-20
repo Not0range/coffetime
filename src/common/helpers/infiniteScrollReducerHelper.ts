@@ -1,9 +1,9 @@
-import {LoadState} from "../loadState";
+import { LoadState } from "../loadState";
 import _ from "lodash";
-import {DEFAULT_PAGE_SIZE} from "./calculatePage";
+import { DEFAULT_PAGE_SIZE } from "./calculatePage";
 
 export function combinePagedItems<T extends { id: string }>
-(loadState: LoadState, existingList: T[], newPage: T[]): { list: T[], loadState: LoadState } {
+    (loadState: LoadState, existingList: T[], newPage: T[]): { list: T[], loadState: LoadState } {
     const current = existingList;
     let resultItems: T[];
     let resultLoadState: LoadState;
@@ -21,5 +21,5 @@ export function combinePagedItems<T extends { id: string }>
         }
     }
 
-    return {list: resultItems, loadState: resultLoadState};
+    return { list: resultItems, loadState: resultLoadState };
 }

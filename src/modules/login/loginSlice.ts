@@ -27,10 +27,10 @@ export const loginSlice = createSlice({
   initialState: LoginInitialState,
   reducers: {
     login: (state, action: PayloadAction<ILoginState>) => {
-      ({type: state.type, token: state.token, expired: state.expired} = action.payload);
+      ({ type: state.type, token: state.token, expired: state.expired } = action.payload);
     },
     logout: (state) => {
-      ({type: state.type, token: state.token, expired: state.expired} = {
+      ({ type: state.type, token: state.token, expired: state.expired } = {
         type: LoginType.none,
         token: "",
         expired: 0
@@ -46,5 +46,5 @@ function rehydrateHandler(state: ILoginState, action: PayloadAction<IAppState>):
   return newState(action.payload.login || state, {});
 }
 
-export const {login, logout} = loginSlice.actions;
+export const { login, logout } = loginSlice.actions;
 export default loginSlice.reducer;

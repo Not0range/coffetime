@@ -31,19 +31,19 @@ export const systemSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(CoreActions.rehydrate, rehydrateHandler)
-    .addCase(getProfileAsync.pending, (state) => {
-      state.status = 'loading';
-    })
-    .addCase(getProfileAsync.fulfilled, (state, action: PayloadAction<Profile>) => {
-      state.user = action.payload;
-      state.status = 'idle';
-    })
-    .addCase(getProfileAsync.rejected, (state) => {
-      state.status = 'failed';
-    })
-    .addCase(logout, (state) => {
-      state.user = null;
-    })
+      .addCase(getProfileAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(getProfileAsync.fulfilled, (state, action: PayloadAction<Profile>) => {
+        state.user = action.payload;
+        state.status = 'idle';
+      })
+      .addCase(getProfileAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
+      .addCase(logout, (state) => {
+        state.user = null;
+      })
   },
 });
 
@@ -55,14 +55,14 @@ function rehydrateHandler(state: IEntitiesState, action: PayloadAction<IAppState
   });
 }
 
-export const getProfileAsync = createAsyncThunk<Profile, {token: string, type: LoginType}>(
+export const getProfileAsync = createAsyncThunk<Profile, { token: string, type: LoginType }>(
   'Entities/fetchProfile',
-  async ({token, type}) => {
+  async ({ token, type }) => {
     if (type == LoginType.facebook)
       return await GetFacebookProfile(token);
     else if (type == LoginType.vk)
       return await GetVkProfile(token);
-    return {name: "", photo_url: ""}
+    return { name: "", photo_url: "" }
   }
 );
 

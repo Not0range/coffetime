@@ -17,8 +17,8 @@ type Props = StackScreenProps<RootStackParamList, "Registration">;
 export const RegistrationPage: React.FC<Props> = (props: Props) => {
   const profile = useAppSelector(state => state.entities.user);
   const dispatch = useAppDispatch();
-  
-  const {name, photo_url} = profile || {name: "", photo_url: ""};
+
+  const { name, photo_url } = profile || { name: "", photo_url: "" };
   const picture: ImageURISource = photo_url ? { uri: photo_url } : user_picture(true);
 
   const toMainPage = () => {
@@ -31,7 +31,7 @@ export const RegistrationPage: React.FC<Props> = (props: Props) => {
       return false
     }).remove
   }, [])
-  
+
   return (
     <View style={styles.container}>
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
@@ -68,46 +68,46 @@ const goToMainPage = (state: StackNavigationState<RootStackParamList>): CommonAc
 }
 
 const styles = styleSheetCreate({
-    container: {
-        flex: 1
-    } as ViewStyle,
-    background: {
-        flex: 1,
-        justifyContent: "center",
-        alignContent: "center"
-    } as ViewStyle,
-    separatorContainer: {
-        flex: 1,
-        padding: 40,
-        justifyContent: "center",
-        alignContent: "center"
-    } as ViewStyle,
-    profileImageBox: {
-        flex: 1, 
-        justifyContent: "center", 
-        marginBottom: 80
-    } as ViewStyle,
-    profileImageBorder: {
-        alignSelf: "center",
-    } as ImageStyle,
-    profileImage: {
-        alignSelf: "center",
-        position: "absolute",
-        height: 128,
-        width: 128
-    } as ImageStyle,
-    continueButton: {
-        borderRadius: 100,
-        flexDirection: "row",
-        justifyContent: "center",
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-        marginVertical: 5
-    } as ViewStyle,
-    buttonText: {
-        color: "white",
-        fontSize: 18,
-        flex: 1,
-        textAlign: "center"
-    } as TextStyle
+  container: {
+    flex: 1
+  } as ViewStyle,
+  background: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center"
+  } as ViewStyle,
+  separatorContainer: {
+    flex: 1,
+    padding: 40,
+    justifyContent: "center",
+    alignContent: "center"
+  } as ViewStyle,
+  profileImageBox: {
+    flex: 1,
+    justifyContent: "center",
+    marginBottom: 80
+  } as ViewStyle,
+  profileImageBorder: {
+    alignSelf: "center",
+  } as ImageStyle,
+  profileImage: {
+    alignSelf: "center",
+    position: "absolute",
+    height: 128,
+    width: 128
+  } as ImageStyle,
+  continueButton: {
+    borderRadius: 100,
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginVertical: 5
+  } as ViewStyle,
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    flex: 1,
+    textAlign: "center"
+  } as TextStyle
 });

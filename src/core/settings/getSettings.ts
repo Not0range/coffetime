@@ -1,4 +1,4 @@
-import {IAppSettings} from "./appSettings";
+import { IAppSettings } from "./appSettings";
 
 const getSettings = (): IAppSettings => {
     // @ts-ignore

@@ -1,4 +1,4 @@
-import {assertNotNull} from "../assertNotNull";
+import { assertNotNull } from "../assertNotNull";
 
 export function getParamsFromProps<T>(props: INavParam<T>): T {
     const params = assertNotNull(props.navigation, "Navigation missing").state.params;
@@ -7,5 +7,5 @@ export function getParamsFromProps<T>(props: INavParam<T>): T {
 }
 
 export interface INavParam<T> {
-    navigation: {state: {params?: T}};
+    navigation: { state: { params?: T } };
 }

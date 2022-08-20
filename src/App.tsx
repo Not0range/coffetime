@@ -17,7 +17,7 @@ const { store, persistor } = createStore(appSettingsProvider.settings.devOptions
   ? MigrateStoreMode.purge
   : MigrateStoreMode.none);
 
-export {store}
+export { store }
 
 export const App: React.FC = () => {
   const [isError, setError] = useState(false);

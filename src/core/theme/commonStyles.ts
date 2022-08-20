@@ -1,7 +1,7 @@
-import {Platform, TextStyle, ViewStyle} from "react-native";
-import {styleSheetCreate, styleSheetFlatten} from "../../common/utils";
-import {Colors} from "./colors";
-import {Fonts} from "./fonts";
+import { Platform, TextStyle, ViewStyle } from "react-native";
+import { styleSheetCreate, styleSheetFlatten } from "../../common/utils";
+import { Colors } from "./colors";
+import { Fonts } from "./fonts";
 
 export const CommonStyles = styleSheetCreate({
     flex1: {
@@ -18,7 +18,7 @@ export const CommonStyles = styleSheetCreate({
     shadow: {
         ...Platform.select({
             ios: {
-                shadowOffset: {height: 3, width: 0},
+                shadowOffset: { height: 3, width: 0 },
                 shadowOpacity: 0.16,
                 shadowRadius: 6,
             },
@@ -30,7 +30,7 @@ export const CommonStyles = styleSheetCreate({
     shadow2: {
         ...Platform.select({
             ios: {
-                shadowOffset: {height: 3, width: 0},
+                shadowOffset: { height: 3, width: 0 },
                 shadowOpacity: 0.45,
                 shadowRadius: 6,
             },
@@ -81,7 +81,7 @@ const commonHeaderStyle = {
         ios: {
             shadowRadius: 4,
             shadowOpacity: 0.3,
-            shadowOffset: {width: 0, height: 4},
+            shadowOffset: { width: 0, height: 4 },
         },
         android: {
             elevation: 8
@@ -90,6 +90,6 @@ const commonHeaderStyle = {
 } as ViewStyle;
 
 export const CommonHeaderStyles = styleSheetCreate({
-    headerTitleStyle: styleSheetFlatten(commonHeaderTitleStyle, {color: Colors.white}),
-    headerStyle: styleSheetFlatten(commonHeaderStyle, {backgroundColor: Colors.black}),
+    headerTitleStyle: styleSheetFlatten(commonHeaderTitleStyle, { color: Colors.white }),
+    headerStyle: styleSheetFlatten(commonHeaderStyle, { backgroundColor: Colors.black }),
 });

@@ -1,4 +1,4 @@
-import {appSettingsProvider} from "./appSettingsProvider";
+import { appSettingsProvider } from "./appSettingsProvider";
 
 export {
     appSettingsProvider,

@@ -45,7 +45,7 @@ export function configureStore(
   const mainReducer = persistReducer(persistConfig, combinedReducer);
   const store = configure({
     reducer: mainReducer,
-    middleware: (getDefault) => getDefault({serializableCheck: false}).concat(logger)
+    middleware: (getDefault) => getDefault({ serializableCheck: false }).concat(logger)
   });
 
   const persistor = persistStore(store, undefined, callback);

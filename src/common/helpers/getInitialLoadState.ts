@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {LoadState} from "../loadState";
+import { LoadState } from "../loadState";
 
 export function getInitialLoadState(array: any[] | null | undefined): LoadState {
     return _.isEmpty(array) ? LoadState.needLoad : LoadState.idle;

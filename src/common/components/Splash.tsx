@@ -1,26 +1,26 @@
-import React, {PureComponent} from "react";
-import {Image, ImageStyle, View} from "react-native";
-import {appSettingsProvider} from "../../core/settings";
-import {CommonStyles, isIos} from "../../core/theme";
-import {SplashResources} from "../ImageResources.g";
-import {styleSheetCreate} from "../utils";
+import React, { PureComponent } from "react";
+import { Image, ImageStyle, View } from "react-native";
+import { appSettingsProvider } from "../../core/settings";
+import { CommonStyles, isIos } from "../../core/theme";
+import { SplashResources } from "../ImageResources.g";
+import { styleSheetCreate } from "../utils";
 
 export const Splash: React.FC = () => {
-  if (isIos) {
-    const useDefaultSource = appSettingsProvider.settings.environment != "Development" && __DEV__;
+    if (isIos) {
+        const useDefaultSource = appSettingsProvider.settings.environment != "Development" && __DEV__;
 
-    return (
-        <View style={CommonStyles.flexWhiteBackground}>
-            <Image
-                style={styles.image}
-                defaultSource={useDefaultSource ? SplashResources.splash : undefined}
-                source={SplashResources.splash}
-            />
-        </View>
-    );
-} else {
-    return null;
-}
+        return (
+            <View style={CommonStyles.flexWhiteBackground}>
+                <Image
+                    style={styles.image}
+                    defaultSource={useDefaultSource ? SplashResources.splash : undefined}
+                    source={SplashResources.splash}
+                />
+            </View>
+        );
+    } else {
+        return null;
+    }
 }
 
 const styles = styleSheetCreate({
