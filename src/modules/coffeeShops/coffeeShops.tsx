@@ -1,13 +1,14 @@
 import React from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, ViewStyle } from "react-native";
 import { defaultIdExtractor } from "../../common/helpers";
-import { CommonStyles } from "../../core/theme";
+import { styleSheetCreate } from "../../common/utils";
+import { Colors } from "../../core/theme";
 import { CoffeeShopTestData, ICoffeeShop } from "../../types/CoffeeShop";
 import { CoffeeShopItem } from "./coffeeShopItem";
 
 export const CoffeeShopsList: React.FC = () => {
   return (
-    <View style={CommonStyles.flex1}>
+    <View style={styles.container}>
       <FlatList
         data={CoffeeShopTestData}
         keyExtractor={defaultIdExtractor}
@@ -21,3 +22,10 @@ const renderCafe = ({ item }: { item: ICoffeeShop }): JSX.Element => {
     <CoffeeShopItem title={item.title} address={item.address} image={item.image} />
   )
 }
+
+const styles = styleSheetCreate({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.gray
+  } as ViewStyle
+});

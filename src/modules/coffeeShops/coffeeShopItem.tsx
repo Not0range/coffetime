@@ -2,8 +2,9 @@ import React from "react";
 import { ViewStyle, ImageStyle, TextStyle, ImageSourcePropType, Image, Text, TouchableOpacity, View } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
 import { localization } from "../../common/localization/localization";
-import { styleSheetCreate } from "../../common/utils";
-import { Fonts } from "../../core/theme";
+import { styleSheetCreate, styleSheetFlatten } from "../../common/utils";
+import { Colors, Fonts } from "../../core/theme";
+import { CommonStyles } from "../../core/theme/commonStyles";
 
 interface IProps {
   title: string;
@@ -14,7 +15,7 @@ interface IProps {
 
 export const CoffeeShopItem: React.FC<IProps> = (props: IProps) => {
   return (
-    <View style={styles.container}>
+    <View style={styleSheetFlatten(styles.container, CommonStyles.shadow)}>
       <Image source={props.image} style={styles.image} />
       <View style={styles.description}>
         <Text style={styles.title}>{props.title}</Text>
@@ -34,7 +35,8 @@ export const CoffeeShopItem: React.FC<IProps> = (props: IProps) => {
 const styles = styleSheetCreate({
   container: {
     flexDirection: "row",
-    marginVertical: 4
+    marginVertical: 4,
+    backgroundColor: Colors.white
   } as ViewStyle,
   description: {
     flex: 2,
