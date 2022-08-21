@@ -7,6 +7,10 @@ export class IconsResources {
     static readonly icon_map: ImageURISource = require("../../resources/images/icons/icon_map.png");
     static readonly icon_list: ImageURISource = require("../../resources/images/icons/icon_list.png");
     static readonly icon_read_more: ImageURISource = require("../../resources/images/icons/icon_read_more.png");
+    static readonly icon_locating: ImageURISource = require("../../resources/images/icons/icon_locating.png");
+    static readonly icon_coffe: ImageURISource = require("../../resources/images/icons/icon_coffe.png");
+    static readonly icon_search: ImageURISource = require("../../resources/images/icons/icon_search.png");
+    static readonly icon_sent: ImageURISource = require("../../resources/images/icons/icon_sent.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");

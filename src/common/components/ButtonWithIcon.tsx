@@ -1,23 +1,25 @@
 import React from "react";
-import { Image, ImageSourcePropType, ImageStyle, Text, TextStyle, TouchableOpacity, TouchableOpacityProps, View, ViewProps } from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { IconsResources } from "../ImageResources.g";
-import { localization } from "../localization/localization";
+import { Image, ImageSourcePropType, ImageStyle, Text, TextStyle, TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { styleSheetCreate } from "../utils";
 
 interface IProps extends TouchableOpacityProps {
   icon?: ImageSourcePropType;
   text?: string;
+  iconPosition?: "flex-start" | "center" | "flex-end";
 }
 
 export const ButtonWithIcon: React.FC<IProps> = (props: IProps) => {
   const style = !props.icon && !props.text ? [props.style, { paddingVertical: 30 }] : [props.style];
+  const iconStyle = {
+    alignSelf: props.iconPosition || "flex-start"
+  }
+
   return (
     <TouchableOpacity
       style={style}
       onPress={props.onPress}
     >
-      {props.icon ? <Image source={props.icon} style={styles.icon} /> : null}
+      {props.icon ? <Image source={props.icon} style={iconStyle} /> : null}
       {props.text ? <Text style={styles.buttonText}>{props.text}</Text> : null}
     </TouchableOpacity>
   )

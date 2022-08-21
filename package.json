@@ -10,15 +10,19 @@
     "ts": "tsc -p .",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "ResourcesGenerator": "generator --dir=resources/images --out=src/common/ImageResources.g.ts",
-    "assets": "npx react-native-asset"
+    "assets": "npx react-native-asset",
+    "installDebug:android": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/geolocation": "^2.1.0",
     "@react-navigation/drawer": "^6.4.3",
     "@react-navigation/material-top-tabs": "^6.2.2",
     "@react-navigation/native": "^6.0.11",
     "@react-navigation/stack": "^6.2.2",
     "@reduxjs/toolkit": "^1.8.3",
+    "@rnmapbox/maps": "rnmapbox/maps#main",
+    "@turf/distance": "^6.5.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "react": "18.0.0",
