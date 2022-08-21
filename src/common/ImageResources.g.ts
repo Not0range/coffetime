@@ -11,6 +11,9 @@ export class IconsResources {
     static readonly icon_coffe: ImageURISource = require("../../resources/images/icons/icon_coffe.png");
     static readonly icon_search: ImageURISource = require("../../resources/images/icons/icon_search.png");
     static readonly icon_sent: ImageURISource = require("../../resources/images/icons/icon_sent.png");
+    static readonly icon_heart_active: ImageURISource = require("../../resources/images/icons/icon_heart_active.png");
+    static readonly icon_heart_gray: ImageURISource = require("../../resources/images/icons/icon_heart_gray.png");
+    static readonly icon_ruble: ImageURISource = require("../../resources/images/icons/icon_ruble.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");
@@ -28,4 +31,11 @@ export class CoffeeShopImages {
     static readonly shop2: ImageURISource = require("../../resources/images/coffeeShops/shop2.png");
     static readonly shop3: ImageURISource = require("../../resources/images/coffeeShops/shop3.png");
     static readonly shop4: ImageURISource = require("../../resources/images/coffeeShops/shop4.png");
+}
+
+export class DrinksImages {
+    static readonly drink1: ImageURISource = require("../../resources/images/drinks/drink1.png");
+    static readonly drink2: ImageURISource = require("../../resources/images/drinks/drink2.png");
+    static readonly drink3: ImageURISource = require("../../resources/images/drinks/drink3.png");
+    static readonly drink4: ImageURISource = require("../../resources/images/drinks/drink4.png");
 }
