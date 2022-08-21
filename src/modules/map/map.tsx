@@ -44,7 +44,7 @@ export const Map: React.FC<Props> = (props: Props) => {
 
   const setCenter = (pos: any) => {
     setUserCoords([pos.coords.longitude, pos.coords.latitude]);
-    setCameraCoords(userCoords);
+    setCameraCoords([pos.coords.longitude, pos.coords.latitude]);
     setZoom(15);
     setLocatingVisible(true);
   };
