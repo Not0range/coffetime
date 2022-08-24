@@ -1,6 +1,7 @@
 import { Profile } from "../../types/Profile";
+import { appSettingsProvider } from "../settings";
 
-export const facebookLoginUrl = 'https://www.facebook.com/v14.0/dialog/oauth?client_id=348286724178990&response_type=token&redirect_uri=https://www.facebook.com/connect/login_success.html'
+export const facebookLoginUrl = `https://www.facebook.com/v14.0/dialog/oauth?client_id=${appSettingsProvider.settings.fbClientId}&response_type=token&redirect_uri=https://www.facebook.com/connect/login_success.html`
 
 const facebookBaseUrl = "https://graph.facebook.com/v14.0";
 

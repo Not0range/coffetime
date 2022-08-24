@@ -11,9 +11,10 @@ import { PointAnnotation } from "../../common/components/PointAnnotation";
 import { CoffeeShopTestData, ICoffeeShop } from "../../types/CoffeeShop";
 import { ButtonWithIcon } from "../../common/components/ButtonWithIcon";
 import calculateDistance from "@turf/distance"
+import { appSettingsProvider } from "../../core/settings";
 
 MapboxGL.setWellKnownTileServer("Mapbox")
-MapboxGL.setAccessToken('pk.eyJ1Ijoibm90b3JhbmdlIiwiYSI6ImNsNzJnYTl5ODB5MHkzeHM5NWVsY2tzemkifQ.EDUqnBFh-nORRa2LiBFKiw');
+MapboxGL.setAccessToken(appSettingsProvider.settings.mapboxApiKey);
 MapboxGL.setConnected(true);
 
 type Props = MaterialTopTabScreenProps<ShopsStackParamList, "Map">;

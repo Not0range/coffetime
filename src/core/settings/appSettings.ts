@@ -12,6 +12,9 @@ export interface IAppSettings {
     showVersion: boolean;
     supportUrl: string;
     termServer: string;
+    vkClientId: string;
+    fbClientId: string;
+    mapboxApiKey: string;
     devOptions: IDevOptions;
 }
 

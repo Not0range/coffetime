@@ -1,6 +1,7 @@
 import { Profile } from "../../types/Profile";
+import { appSettingsProvider } from "../settings";
 
-export const vkLoginUrl = "https://oauth.vk.com/authorize?client_id=51405250&redirect_uri=https://oauth.vk.com/blank.html&response_type=token";
+export const vkLoginUrl = `https://oauth.vk.com/authorize?client_id=${appSettingsProvider.settings.vkClientId}&redirect_uri=https://oauth.vk.com/blank.html&response_type=token`;
 
 const vkBaseUrl = "https://api.vk.com/method";
 
