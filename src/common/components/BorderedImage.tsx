@@ -7,7 +7,7 @@ interface IProps extends ImageProps {
   borderRadius: number;
 }
 
-export const BorderedImage: React.FC<IProps> = (props: IProps) => {
+export const BorderedImage: React.FC<IProps> = (props) => {
   if (isIos || !isAndroidLollipop) {
     return <Image {...props} resizeMode={"cover"} />;
   } else {

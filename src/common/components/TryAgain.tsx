@@ -10,7 +10,7 @@ interface IProps {
   errorText?: string | null;
 }
 
-export const TryAgain: React.FC<IProps> = (props: IProps) => {
+export const TryAgain: React.FC<IProps> = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{props.errorText}</Text>

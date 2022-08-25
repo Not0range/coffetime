@@ -6,7 +6,7 @@ interface IProps {
   isLoading?: boolean;
 }
 
-export const LoadingModal: React.FC<IProps> = (props: IProps) => {
+export const LoadingModal: React.FC<IProps> = (props) => {
   const onRequestClose = (): void => { };
 
   return (

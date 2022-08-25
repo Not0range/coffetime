@@ -19,7 +19,7 @@ MapboxGL.setConnected(true);
 
 type Props = MaterialTopTabScreenProps<ShopsStackParamList, "Map">;
 
-export const Map: React.FC<Props> = (props: Props) => {
+export const Map: React.FC<Props> = (props) => {
   const [userCoords, setUserCoords] = useState([0, 0]);
   const [cameraCoords, setCameraCoords] = useState([0, 0]);
   const [zoom, setZoom] = useState(0);
@@ -104,9 +104,9 @@ export const Map: React.FC<Props> = (props: Props) => {
       {selected != -1 ?
         <View style={styles.overlay}>
           <View style={styles.topContainer}>
-            <ButtonWithIcon icon={IconsResources.icon_sent} style={styles.button} iconPosition={"center"} />
+            <ButtonWithIcon icon={IconsResources.icon_sent} style={styles.button} iconStyle={styles.buttonIcon} />
             <View style={CommonStyles.flex1} />
-            <ButtonWithIcon icon={IconsResources.icon_search} style={styles.button} iconPosition={"center"} />
+            <ButtonWithIcon icon={IconsResources.icon_search} style={styles.button} iconStyle={styles.buttonIcon} />
           </View>
           <View style={styles.bottomContainer}>
             <Text style={styles.title}>{selectedShop?.title}</Text>
@@ -138,6 +138,9 @@ const styles = styleSheetCreate({
     height: 45,
     borderRadius: 50
   } as ViewStyle,
+  buttonIcon: {
+    alignSelf: "center"
+  } as ImageStyle,
   bottomContainer: {
     flex: 1,
     backgroundColor: "white",

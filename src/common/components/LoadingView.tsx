@@ -10,7 +10,7 @@ interface IProps {
   text?: string;
 }
 
-export const LoadingView: React.FC<IProps> = (props: IProps) => {
+export const LoadingView: React.FC<IProps> = (props) => {
   const [opacity, setOpacity] = useState(new Animated.Value(props.isLoading ? 1 : 0));
   const [isAnimationInProgress, setAnimationInProgress] = useState(false);
 

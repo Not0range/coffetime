@@ -20,7 +20,7 @@ import { login, LoginType } from "./loginSlice";
 
 type Props = StackScreenProps<RootStackParamList, "Login">;
 
-export const LoginPage: React.FC<Props> = (props: Props) => {
+export const LoginPage: React.FC<Props> = (props) => {
   const [url, setUrl] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(true);

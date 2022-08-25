@@ -19,7 +19,7 @@ interface IProps extends FlatListProps<any> {
   itemInRow?: number;
 }
 
-export const GridWrapper: React.FC<IProps> = (props: IProps) => {
+export const GridWrapper: React.FC<IProps> = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   let timerId: number | null;
 

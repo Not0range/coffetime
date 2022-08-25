@@ -1,25 +1,22 @@
 import React from "react";
 import { Image, ImageSourcePropType, ImageStyle, Text, TextStyle, TouchableOpacity, TouchableOpacityProps } from "react-native";
-import { styleSheetCreate } from "../utils";
+import { styleSheetCreate, styleSheetFlatten } from "../utils";
 
 interface IProps extends TouchableOpacityProps {
   icon?: ImageSourcePropType;
   text?: string;
-  iconPosition?: "flex-start" | "center" | "flex-end";
+  iconStyle?: ImageStyle;
 }
 
-export const ButtonWithIcon: React.FC<IProps> = (props: IProps) => {
+export const ButtonWithIcon: React.FC<IProps> = (props) => {
   const style = !props.icon && !props.text ? [props.style, { paddingVertical: 30 }] : [props.style];
-  const iconStyle = {
-    alignSelf: props.iconPosition || "flex-start"
-  }
 
   return (
     <TouchableOpacity
       style={style}
       onPress={props.onPress}
     >
-      {props.icon ? <Image source={props.icon} style={iconStyle} /> : null}
+      {props.icon ? <Image source={props.icon} style={styleSheetFlatten(styles.icon, props.iconStyle)} /> : null}
       {props.text ? <Text style={styles.buttonText}>{props.text}</Text> : null}
     </TouchableOpacity>
   )

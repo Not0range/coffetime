@@ -12,7 +12,7 @@ interface IProps {
   selected?: boolean;
 }
 
-export const PointAnnotation: React.FC<IProps> = (props: IProps) => {
+export const PointAnnotation: React.FC<IProps> = (props) => {
   const [size, setSize] = useState(5);
   const { id, coordinate, source, selected } = props;
   const ref = useRef<MapboxGL.PointAnnotation>(null);

@@ -14,7 +14,7 @@ import { logout } from "../login/loginSlice";
 
 type Props = StackScreenProps<RootStackParamList, "Registration">;
 
-export const RegistrationPage: React.FC<Props> = (props: Props) => {
+export const RegistrationPage: React.FC<Props> = (props) => {
   const profile = useAppSelector(state => state.entities.user);
   const dispatch = useAppDispatch();
 
