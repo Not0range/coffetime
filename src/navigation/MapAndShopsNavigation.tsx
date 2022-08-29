@@ -38,8 +38,8 @@ export const MapAndList: React.FC<Props> = (props) => {
   );
   
   const logoutPress = () => {
-    (props.navigation.getParent() as StackNavigationProp<RootStackParamList, "MainPage", undefined>).dispatch(goToLoginPage);
     dispatch(logout());
+    (props.navigation.getParent() as StackNavigationProp<RootStackParamList, "MainPage", undefined>).dispatch(goToLoginPage);
   }
   const buttons: AlertButton[] = [{
     text: localization.common.closeApp,
