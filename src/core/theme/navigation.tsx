@@ -1,9 +1,9 @@
 import { DrawerContentComponentProps, DrawerNavigationOptions } from "@react-navigation/drawer"
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
 import { CommonActions, StackNavigationState } from "@react-navigation/native"
-import { StackNavigationProp } from "@react-navigation/stack"
+import { StackHeaderProps, StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Text, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Image, Text, TouchableOpacity, View, ViewStyle } from "react-native"
 import { ProfileHeader } from "../../common/components/ProfileHeader"
 import { localization } from "../../common/localization/localization"
 import { styleSheetCreate } from "../../common/utils"
@@ -14,7 +14,7 @@ import { Colors } from "./colors"
 import { CommonStyles } from "./commonStyles"
 import { Fonts } from "./fonts"
 
-export const headerOption: DrawerNavigationOptions = {
+export const headerOptions: StackNavigationOptions = {
   headerTitle: "CoffeTime",
   headerTitleAlign: "center",
   headerTitleStyle: {

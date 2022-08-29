@@ -14,6 +14,8 @@ export class IconsResources {
     static readonly icon_heart_active: ImageURISource = require("../../resources/images/icons/icon_heart_active.png");
     static readonly icon_heart_gray: ImageURISource = require("../../resources/images/icons/icon_heart_gray.png");
     static readonly icon_ruble: ImageURISource = require("../../resources/images/icons/icon_ruble.png");
+    static readonly icon_heart_white: ImageURISource = require("../../resources/images/icons/icon_heart_white.png");
+    static readonly icon_heart_black: ImageURISource = require("../../resources/images/icons/icon_heart_black.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");
