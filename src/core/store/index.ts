@@ -3,7 +3,7 @@ import { CoreActions } from "./coreActions";
 import { Reducers } from "./Reducers";
 
 export {
-    CoreActions,
-    actionCreator,
-    type Reducers,
+  CoreActions,
+  actionCreator,
+  type Reducers,
 };

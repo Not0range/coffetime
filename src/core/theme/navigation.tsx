@@ -1,15 +1,10 @@
-import { DrawerContentComponentProps, DrawerNavigationOptions } from "@react-navigation/drawer"
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
 import { CommonActions, StackNavigationState } from "@react-navigation/native"
-import { StackHeaderProps, StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack"
+import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Image, Text, TouchableOpacity, View, ViewStyle } from "react-native"
-import { ProfileHeader } from "../../common/components/ProfileHeader"
-import { localization } from "../../common/localization/localization"
+import { TouchableOpacity, View, ViewStyle } from "react-native"
 import { styleSheetCreate } from "../../common/utils"
-import { LoginType, logout } from "../../modules/login/loginSlice"
 import { RootStackParamList } from "../../navigation/RootNavigation"
-import { useAppDispatch, useAppSelector } from "../store/hooks"
 import { Colors } from "./colors"
 import { CommonStyles } from "./commonStyles"
 import { Fonts } from "./fonts"
@@ -37,45 +32,6 @@ const goToLoginPage = (state: StackNavigationState<RootStackParamList>): CommonA
     routes,
     index: 0
   })
-}
-
-export const drawerContent = ({ state, descriptors, navigation }: DrawerContentComponentProps): React.ReactNode => {
-  const { type } = useAppSelector(state => state.login)
-  const dispatch = useAppDispatch();
-  const logoutPress = () => {
-    (navigation.getParent() as StackNavigationProp<RootStackParamList, "MainPage", undefined>).dispatch(goToLoginPage);
-    dispatch(logout());
-  }
-  return (
-    <View style={drawerStyles.container}>
-      <ProfileHeader />
-      {state.routes.map((route, index) => {
-        const { options } = descriptors[route.key];
-        const isFocused = state.index === index;
-        const color = isFocused ? Colors.normal : "transparent";
-
-        const onPress = () => {
-          navigation.closeDrawer();
-          if (!isFocused) {
-            navigation.navigate({ name: route.name, params: {}, merge: true });
-          }
-        }
-
-        return (
-          <TouchableOpacity
-            key={route.key}
-            style={[drawerStyles.button, { backgroundColor: color }]}
-            onPress={onPress}
-          >
-            <Text>{options.title}</Text>
-          </TouchableOpacity>
-        )
-      })}
-      <TouchableOpacity style={drawerStyles.button} onPress={logoutPress}>
-        <Text>{type == LoginType.guest ? localization.login.login : localization.login.logout}</Text>
-      </TouchableOpacity>
-    </View>
-  )
 }
 
 const drawerStyles = styleSheetCreate({

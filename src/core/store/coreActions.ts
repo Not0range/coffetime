@@ -3,6 +3,5 @@ import { actionCreator } from "./actionCreator";
 import { IAppState } from "./AppState";
 
 export class CoreActions {
-    static rehydrate = actionCreator<IAppState>(REHYDRATE);
-    static navigate = actionCreator("Navigation/NAVIGATE");
+  static rehydrate = actionCreator<IAppState>(REHYDRATE);
 }

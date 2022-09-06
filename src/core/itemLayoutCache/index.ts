@@ -1,8 +1,8 @@
-import {ItemLayoutCache, ItemLayoutName} from "./ItemLayoutCache";
+import { ItemLayoutCache, ItemLayoutName } from "./ItemLayoutCache";
 
 const itemLayoutCache = new ItemLayoutCache();
 
 export {
-    ItemLayoutName,
-    itemLayoutCache,
+  ItemLayoutName,
+  itemLayoutCache,
 };

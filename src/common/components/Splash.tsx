@@ -6,27 +6,27 @@ import { SplashResources } from "../ImageResources.g";
 import { styleSheetCreate } from "../utils";
 
 export const Splash: React.FC = () => {
-    if (isIos) {
-        const useDefaultSource = appSettingsProvider.settings.environment != "Development" && __DEV__;
+  if (isIos) {
+    const useDefaultSource = appSettingsProvider.settings.environment != "Development" && __DEV__;
 
-        return (
-            <View style={CommonStyles.flexWhiteBackground}>
-                <Image
-                    style={styles.image}
-                    defaultSource={useDefaultSource ? SplashResources.splash : undefined}
-                    source={SplashResources.splash}
-                />
-            </View>
-        );
-    } else {
-        return null;
-    }
+    return (
+      <View style={CommonStyles.flexWhiteBackground}>
+        <Image
+          style={styles.image}
+          defaultSource={useDefaultSource ? SplashResources.splash : undefined}
+          source={SplashResources.splash}
+        />
+      </View>
+    );
+  } else {
+    return null;
+  }
 }
 
 const styles = styleSheetCreate({
-    image: {
-        alignSelf: "center",
-        width: "100%",
-        height: "100%",
-    } as ImageStyle,
+  image: {
+    alignSelf: "center",
+    width: "100%",
+    height: "100%",
+  } as ImageStyle,
 });
