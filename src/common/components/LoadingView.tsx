@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Animated, StyleSheet, Text, TextStyle, View, ViewStyle } from "react-native";
-import { Colors, Fonts } from "../../core/theme";
+import { ActivityIndicator, Animated, StyleSheet, Text, TextStyle, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { styleSheetCreate, styleSheetFlatten } from "../utils";
 
 interface IProps {
@@ -8,6 +8,7 @@ interface IProps {
   style?: ViewStyle;
   transparent?: boolean;
   text?: string;
+  onPress?: () => void;
 }
 
 export const LoadingView: React.FC<IProps> = (props) => {
@@ -32,8 +33,12 @@ export const LoadingView: React.FC<IProps> = (props) => {
   if (props.isLoading || isAnimationInProgress) {
     return (
       <Animated.View style={style}>
-        <ActivityIndicator animating={props.isLoading} size="large" color={Colors.white} />
-        {renderText(props.text)}
+        <TouchableWithoutFeedback style={styles.clickable} onPress={props.onPress}>
+          <View style={styles.clickableView}>
+            <ActivityIndicator animating={props.isLoading} size="large" color={Colors.white} />
+            {renderText(props.text)}
+          </View>
+        </TouchableWithoutFeedback>
       </Animated.View>
     );
   } else {
@@ -53,10 +58,18 @@ const styles = styleSheetCreate({
     right: 0,
     top: 0,
     bottom: 0,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: Colors.white88,
     zIndex: 99,
+  } as ViewStyle,
+  clickable: {
+    flex: 1,
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+  } as ViewStyle,
+  clickableView: {
+    flex: 1,
+    justifyContent: "center"
   } as ViewStyle,
   text: {
     alignSelf: "center",

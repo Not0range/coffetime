@@ -11,7 +11,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "ResourcesGenerator": "generator --dir=resources/images --out=src/common/ImageResources.g.ts",
     "assets": "npx react-native-asset",
-    "installDebug:android": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk"
+    "installDebug:android": "adb install ./android/app/build/outputs/apk/debug/app-debug.apk",
+    "installRelease:android": "adb install ./android/app/build/outputs/apk/release/app-release.apk"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",

@@ -55,7 +55,7 @@ export class BaseRequest {
 
       const response = await fetch(
         isFullUrl == true ? url : this.createUrl(url),
-        Object.assign(config, { headers: headers })
+        Object.assign(config, { headers })
       );
 
       status = response.status;

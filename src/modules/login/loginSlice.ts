@@ -1,13 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import _ from "lodash";
-import { store } from "../../App";
+import _, { keys } from "lodash";
 import { AuthHelper } from "../../common/helpers/authHelper";
 import { localization } from "../../common/localization/localization";
-import { newState } from "../../common/newState";
 import { SignInRequestDto } from "../../core/api/generated/dto/SignInRequest.g";
 import { requestsRepository } from "../../core/api/requestsRepository";
+import { ExceptionType, NoAuthError } from "../../core/exceptionTypes";
 import { CoreActions } from "../../core/store";
-import { IAppState } from "../../core/store/AppState";
+import Toast from "react-native-simple-toast";
 
 export interface IAuthParams extends SignInRequestDto {
   error: string;
@@ -32,7 +31,7 @@ const loginSlice = createSlice({
   name: "login",
   initialState: LoginInitialState,
   reducers: {
-    
+
   },
   extraReducers: (builder) => {
     builder
@@ -65,20 +64,25 @@ const loginSlice = createSlice({
 });
 
 function rehydrateHandler(): ILoginState {
-  return {...LoginInitialState};
+  return { ...LoginInitialState };
 }
 
 export const loginAsync = createAsyncThunk<string, SignInRequestDto>(
   "Login/Authorization",
-  async (signInRequest: SignInRequestDto, { rejectWithValue }) => {
+  async (signInRequest: SignInRequestDto, { rejectWithValue, signal }) => {
     try {
       AuthHelper.checkAuthParams(signInRequest);
-      const uuid = await requestsRepository.authorizationApiRequest.signIn(signInRequest);
+      const uuid = await requestsRepository.authorizationApiRequest.signIn(signInRequest, signal);
       return uuid;
     }
     catch (error: any) {
-      const errors: string[] = error.message.filter((i: string | null) => i != null);
+      if (error.name == ExceptionType.Connection)
+        Toast.show(`${error}`);
 
+      if (error.innerError instanceof NoAuthError)
+        return rejectWithValue({ error: localization.errors.loginError, errorSource: "both" });
+
+      const errors: string[] = error.message.filter((i: string | null) => i != null);
       const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);
       const passwordError = errors.some((i: string) => i == localization.errors.invalidPassword);
       const errorSource = emailError && passwordError
@@ -94,13 +98,16 @@ export const loginAsync = createAsyncThunk<string, SignInRequestDto>(
 
 export const registerAsync = createAsyncThunk<string, SignInRequestDto>(
   "Login/Registration",
-  async (signInRequest: SignInRequestDto, { rejectWithValue }) => {
+  async (signInRequest: SignInRequestDto, { rejectWithValue, signal }) => {
     try {
       AuthHelper.checkAuthParams(signInRequest);
-      const uuid = await requestsRepository.authorizationApiRequest.register(signInRequest);
+      const uuid = await requestsRepository.authorizationApiRequest.register(signInRequest, signal);
       return uuid;
     }
     catch (error: any) {
+      if (error.name == ExceptionType.Connection)
+        Toast.show(`${error}`);
+      
       const errors: string[] = error.message.filter((i: string | null) => i != null);
 
       const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);

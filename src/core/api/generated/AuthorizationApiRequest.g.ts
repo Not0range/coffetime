@@ -8,19 +8,21 @@ export class AuthorizationApiRequest extends BaseRequest {
     this.register = this.register.bind(this);
   }
 
-  signIn(signInRequest: SignInRequestDto): Promise<string> {
+  signIn(signInRequest: SignInRequestDto, signal: AbortSignal): Promise<string> {
     return this.fetch("User/Authorization", {
       method: "POST",
-      body: JSON.stringify(signInRequest)
+      body: JSON.stringify(signInRequest),
+      signal
     })
     .then(response => response.json())
     .catch(BaseRequest.handleError);
   }
 
-  register(signInRequest: SignInRequestDto): Promise<string> {
+  register(signInRequest: SignInRequestDto, signal: AbortSignal): Promise<string> {
     return this.fetch("User/Register", {
       method: "POST",
-      body: JSON.stringify(signInRequest)
+      body: JSON.stringify(signInRequest),
+      signal
     })
     .then(response => response.json())
     .catch(BaseRequest.handleError);

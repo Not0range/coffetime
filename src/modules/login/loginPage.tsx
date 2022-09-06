@@ -1,5 +1,6 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
+import { PayloadAction } from "@reduxjs/toolkit";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, ImageBackground, Keyboard, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
@@ -15,14 +16,16 @@ import { Colors, CommonStyles } from "../../core/theme";
 import { RootStackParamList } from "../../navigation/RootNavigation";
 import { IAuthParams, loginAsync } from "./loginSlice";
 
+import Toast from "react-native-simple-toast";
+
 type Props = StackScreenProps<RootStackParamList, "Login">;
 
 export const LoginPage: React.FC<Props> = (props) => {
-  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSecureEnabled, setIsSecureEnabled] = useState(true);
   const passwordRef = useRef<TextInput>(null);
+  const [loginPromise, setLoginPromise] = useState<any>(null);
 
   const { loading: loadingState, errorSource } = useAppSelector(state => state.login);
   const authToken = useAppSelector(state => state.system.authToken);
@@ -31,7 +34,6 @@ export const LoginPage: React.FC<Props> = (props) => {
   useEffect(() => {
     if (authToken != null)
       props.navigation.dispatch(goToMainPage);
-    setLoading(false);
   }, []);
 
   const onInputForPasswordSubmit = (): void => {
@@ -44,8 +46,10 @@ export const LoginPage: React.FC<Props> = (props) => {
 
   const login = () => {
     Keyboard.dismiss();
-    dispatch(loginAsync({ email, password }))
-    .then(result => {
+    const promise = dispatch(loginAsync({ email, password }));
+    setLoginPromise(promise);
+
+    promise.then(result => {
       if (result.meta.requestStatus == "fulfilled")
         props.navigation.dispatch(goToMainPage);
       else
@@ -55,11 +59,15 @@ export const LoginPage: React.FC<Props> = (props) => {
 
   const registration = () => {
     props.navigation.navigate("Registration");
-  }
+  };
+
+  const cancelLogin = () => {
+    loginPromise.abort();
+  };
 
   return (
     <View style={CommonStyles.flex1}>
-      <LoadingModal isLoading={loading || loadingState} />
+      <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
