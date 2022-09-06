@@ -2,13 +2,11 @@
 import { ImageURISource } from "react-native";
 
 export class IconsResources {
-    static readonly icon_facebook: ImageURISource = require("../../resources/images/icons/icon_facebook.png");
-    static readonly icon_vk: ImageURISource = require("../../resources/images/icons/icon_vk.png");
     static readonly icon_map: ImageURISource = require("../../resources/images/icons/icon_map.png");
     static readonly icon_list: ImageURISource = require("../../resources/images/icons/icon_list.png");
     static readonly icon_read_more: ImageURISource = require("../../resources/images/icons/icon_read_more.png");
     static readonly icon_locating: ImageURISource = require("../../resources/images/icons/icon_locating.png");
-    static readonly icon_coffe: ImageURISource = require("../../resources/images/icons/icon_coffe.png");
+    static readonly icon_cafe: ImageURISource = require("../../resources/images/icons/icon_cafe.png");
     static readonly icon_search: ImageURISource = require("../../resources/images/icons/icon_search.png");
     static readonly icon_sent: ImageURISource = require("../../resources/images/icons/icon_sent.png");
     static readonly icon_heart_active: ImageURISource = require("../../resources/images/icons/icon_heart_active.png");
@@ -16,16 +14,21 @@ export class IconsResources {
     static readonly icon_ruble: ImageURISource = require("../../resources/images/icons/icon_ruble.png");
     static readonly icon_heart_white: ImageURISource = require("../../resources/images/icons/icon_heart_white.png");
     static readonly icon_heart_black: ImageURISource = require("../../resources/images/icons/icon_heart_black.png");
+    static readonly icon_eye: ImageURISource = require("../../resources/images/icons/icon_eye.png");
+    static readonly icon_eye_non: ImageURISource = require("../../resources/images/icons/icon_eye_non.png");
+    static readonly symbol_rub: ImageURISource = require("../../resources/images/icons/symbol_rub.png");
+    static readonly icon_coffe: ImageURISource = require("../../resources/images/icons/icon_coffe.png");
+    static readonly icon_milk: ImageURISource = require("../../resources/images/icons/icon_milk.png");
+    static readonly icon_pressure: ImageURISource = require("../../resources/images/icons/icon_pressure.png");
+    static readonly icon_water: ImageURISource = require("../../resources/images/icons/icon_water.png");
+    static readonly icon_temperature: ImageURISource = require("../../resources/images/icons/icon_temperature.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");
 }
 export class ImageResources {
     static readonly image_back: ImageURISource = require("../../resources/images/image_back.png");
-    static readonly user_border: ImageURISource = require("../../resources/images/user_border.png");
-    static readonly user: ImageURISource = require("../../resources/images/user.png");
-    static readonly user_white: ImageURISource = require("../../resources/images/user_white.png");
-    static readonly map: ImageURISource = require("../../resources/images/map.png");
+    static readonly image_no_coffe: ImageURISource = require("../../resources/images/image_no_coffe.png");
 }
 
 export class CoffeeShopImages {

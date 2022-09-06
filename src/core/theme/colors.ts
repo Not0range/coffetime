@@ -9,9 +9,12 @@ export class Colors {
   static orange = "#EB9E3E";
   static white88 = "#F5FCFF88";
   static transparent = "transparent";
-
-  static facebook = "#4267b2";
-  static vk = "#0077FF";
+  
+  static whiteTwo = "#ebebeb";
+  static whiteThree = "#f7f7f7";
+  static warmGrey = "#979797";
+  static warmGreyTwo = "#9b9b9b";
+  static paleRed = "#d34744";
 
   static normal = "#C8D9AF";
   static active = "#B3C39C";

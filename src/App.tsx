@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { UIManager } from "react-native";
 import { UnhandledError } from "./common/components/UnhandledError";
@@ -10,6 +10,7 @@ import { localization } from "./common/localization/localization";
 import { appSettingsProvider } from "./core/settings";
 import { Splash } from "./common/components/Splash";
 import { RootNavigation } from "./navigation/RootNavigation";
+import DevMenu from "react-native-dev-menu";
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -32,6 +33,15 @@ export const App: React.FC = () => {
     setError(false);
   }
 
+  useEffect(() => {
+    if (__DEV__) {
+      DevMenu.addItem(
+        "ResetStore",
+        () => resetState(MigrateStoreMode.purge),
+      );
+    }
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={<Splash />} persistor={persistor}>
@@ -52,12 +62,7 @@ function createStore(mode: MigrateStoreMode) {
 }
 
 function onStoreConfigured() {
-  // if (__DEV__) {
-  //   DevMenu.addItem(
-  //     "Navigate to Playground",
-  //     () => store.dispatch(NavigationActions.navigateToPlayground()),
-  //   );
-  // }
+  
 
   const s = store;
   const state = s.getState();

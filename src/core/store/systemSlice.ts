@@ -1,30 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { newState } from '../../common/newState';
+import { loginAsync, registerAsync } from '../../modules/login/loginSlice';
 import { IAppState } from './AppState';
 import { CoreActions } from './coreActions';
 
 export interface ISystemState {
   buildNumber: number;
   authToken: string | null;
-  refreshToken: string | null;
 }
 
 export const SystemInitialState: ISystemState = {
-  authToken: null,
-  refreshToken: null,
   buildNumber: 1,
+  authToken: null
 };
 
-export const systemSlice = createSlice({
+const systemSlice = createSlice({
   name: 'System',
   initialState: SystemInitialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string>) => {
-      state.authToken = action.payload;
+    logout: (state) => {
+      state.authToken = null;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(CoreActions.rehydrate, rehydrateHandler)
+    .addCase(loginAsync.fulfilled, (state, action: PayloadAction<string>) => {
+      state.authToken = action.payload;
+    })
+    .addCase(registerAsync.fulfilled, (state, action: PayloadAction<string>) => {
+      state.authToken = action.payload;
+    })
   },
 });
 
@@ -32,5 +37,5 @@ function rehydrateHandler(state: ISystemState, action: PayloadAction<IAppState>)
   return newState(action.payload.system || state, {});
 }
 
-export const { setToken } = systemSlice.actions;
+export const { logout } = systemSlice.actions;
 export default systemSlice.reducer;

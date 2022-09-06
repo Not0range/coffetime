@@ -1,62 +1,109 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useEffect } from "react";
-import { BackHandler, Image, ImageBackground, ImageStyle, ImageURISource, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
-import { BorderedImage } from "../../common/components/BorderedImage";
+import React, { useRef, useState } from "react";
+import { Alert, ImageBackground, Keyboard, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { AuthTextInput } from "../../common/components/AuthTextInput";
+import { LoadingModal } from "../../common/components/LoadingModal";
 import { Logo } from "../../common/components/Logo";
-import { ImageResources, SplashResources } from "../../common/ImageResources.g";
+import { MainButton } from "../../common/components/MainButton";
+import { ButtonType } from "../../common/enums/buttonType";
+import { IconsResources, SplashResources } from "../../common/ImageResources.g";
 import { localization } from "../../common/localization/localization";
 import { styleSheetCreate } from "../../common/utils";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
-import { user_picture } from "../../core/theme/themeDependencies";
+import { Colors, CommonStyles } from "../../core/theme";
 import { RootStackParamList } from "../../navigation/RootNavigation";
-import { logout } from "../login/loginSlice";
+import { IAuthParams, registerAsync } from "../login/loginSlice";
 
 type Props = StackScreenProps<RootStackParamList, "Registration">;
 
 export const RegistrationPage: React.FC<Props> = (props) => {
-  const profile = useAppSelector(state => state.entities.user);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isSecureEnabled, setIsSecureEnabled] = useState(true);
+  const passwordRef = useRef<TextInput>(null);
+
+  const { loading, errorSource } = useAppSelector(state => state.login);
   const dispatch = useAppDispatch();
 
-  const { name, photo_url } = profile || { name: "", photo_url: "" };
-  const picture: ImageURISource = photo_url ? { uri: photo_url } : user_picture(true);
+  const onInputForPasswordSubmit = (): void => {
+    passwordRef.current?.focus();
+  };
 
-  const toMainPage = () => {
-    props.navigation.dispatch(goToMainPage);
-  }
+  const passwordIconPress = () => {
+    setIsSecureEnabled(!isSecureEnabled);
+  };
 
-  useEffect(() => {
-    return BackHandler.addEventListener("hardwareBackPress", () => {
-      dispatch(logout());
-      return false
-    }).remove
-  }, [])
+  const register = () => {
+    Keyboard.dismiss();
+    dispatch(registerAsync({ email, password }))
+    .then(result => {
+      if (result.meta.requestStatus == "fulfilled")
+        props.navigation.dispatch(goToMainPage);
+      else
+        Alert.alert(localization.errors.error, (result.payload as IAuthParams).error);
+    });
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={CommonStyles.flex1}>
+      <LoadingModal isLoading={loading} />
+
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-        <View style={styles.separatorContainer}>
-          <Logo />
-        </View>
-        <View style={styles.separatorContainer}>
-          <View style={styles.profileImageBox}>
-            <Image source={ImageResources.user_border} style={styles.profileImageBorder} />
-            <BorderedImage source={picture} borderRadius={100} style={styles.profileImage} />
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={CommonStyles.flex1}>
+            <View style={styles.separatorContainer}>
+              <Logo />
+            </View>
+            <View style={styles.loginContainer}>
+              <AuthTextInput
+                label={localization.login.email}
+                containerStyle={styles.input}
+                keyboardType={"email-address"}
+                value={email}
+                onChangeText={setEmail}
+                enablesReturnKeyAutomatically={true}
+                returnKeyType={"next"}
+                onSubmitEditing={onInputForPasswordSubmit}
+                blurOnSubmit={false}
+                isError={errorSource == "email" || errorSource == "both"}
+              />
+              <AuthTextInput
+                inputRef={passwordRef}
+                label={localization.login.password}
+                containerStyle={styles.input}
+                keyboardType={"default"}
+                value={password}
+                spellCheck={false}
+                onChangeText={setPassword}
+                enablesReturnKeyAutomatically={true}
+                returnKeyType={"done"}
+                onSubmitEditing={register}
+                blurOnSubmit={false}
+                secureTextEntry={isSecureEnabled}
+                icon={isSecureEnabled ? IconsResources.icon_eye : IconsResources.icon_eye_non}
+                onIconPress={passwordIconPress}
+                isError={errorSource == "password" || errorSource == "both"}
+              />
+              <MainButton
+                type={ButtonType.Action}
+                title={localization.login.signUp}
+                style={styles.button}
+                onPress={register}
+              />
+              <MainButton
+                type={ButtonType.Action}
+                title={localization.common.back}
+                style={styles.button}
+                onPress={props.navigation.goBack}
+              />
+            </View>
           </View>
-          <Text style={styles.buttonText}>{name}</Text>
-        </View>
-        <View style={styles.separatorContainer}>
-          <TouchableOpacity
-            style={[styles.continueButton, { backgroundColor: "#C8D9AF" }]}
-            onPress={toMainPage}
-          >
-            <Text style={styles.buttonText}>{localization.login.continue}</Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableWithoutFeedback>
       </ImageBackground>
     </View>
   )
-}
+};
 
 const goToMainPage = (state: StackNavigationState<RootStackParamList>): CommonActions.Action => {
   const routes = [{ name: "MainPage" }];
@@ -65,16 +112,13 @@ const goToMainPage = (state: StackNavigationState<RootStackParamList>): CommonAc
     routes,
     index: 0
   })
-}
+};
 
 const styles = styleSheetCreate({
-  container: {
-    flex: 1
-  } as ViewStyle,
   background: {
     flex: 1,
     justifyContent: "center",
-    alignContent: "center"
+    alignContent: "center",
   } as ViewStyle,
   separatorContainer: {
     flex: 1,
@@ -82,32 +126,25 @@ const styles = styleSheetCreate({
     justifyContent: "center",
     alignContent: "center"
   } as ViewStyle,
-  profileImageBox: {
-    flex: 1,
+  loginContainer: {
+    flex: 3,
+    padding: 40,
     justifyContent: "center",
-    marginBottom: 80
+    alignContent: "center"
   } as ViewStyle,
-  profileImageBorder: {
-    alignSelf: "center",
-  } as ImageStyle,
-  profileImage: {
-    alignSelf: "center",
-    position: "absolute",
-    height: 128,
-    width: 128
-  } as ImageStyle,
-  continueButton: {
+  button: {
     borderRadius: 100,
     flexDirection: "row",
     justifyContent: "center",
     paddingVertical: 15,
     paddingHorizontal: 30,
-    marginVertical: 5
+    marginTop: 30
   } as ViewStyle,
-  buttonText: {
-    color: "white",
-    fontSize: 18,
-    flex: 1,
-    textAlign: "center"
-  } as TextStyle
+  input: {
+    marginHorizontal: 16,
+    marginTop: 30,
+    paddingHorizontal: 4,
+    backgroundColor: Colors.white88,
+    borderRadius: 10
+  } as ViewStyle
 });

@@ -1,50 +1,119 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
+import { store } from "../../App";
+import { AuthHelper } from "../../common/helpers/authHelper";
+import { localization } from "../../common/localization/localization";
 import { newState } from "../../common/newState";
+import { SignInRequestDto } from "../../core/api/generated/dto/SignInRequest.g";
+import { requestsRepository } from "../../core/api/requestsRepository";
 import { CoreActions } from "../../core/store";
 import { IAppState } from "../../core/store/AppState";
 
-export enum LoginType {
-  none = "none",
-  guest = "guest",
-  vk = "vk",
-  facebook = "facebook"
+export interface IAuthParams extends SignInRequestDto {
+  error: string;
+  errorSource: ErrorSource;
 }
 
+export type ErrorSource = "email" | "password" | "both";
+
 export interface ILoginState {
-  type: LoginType;
-  token: string;
-  expired: number;
+  loading: boolean;
+  error: string | null;
+  errorSource: ErrorSource | null;
 }
 
 export const LoginInitialState: ILoginState = {
-  type: LoginType.none,
-  token: "",
-  expired: 0
+  loading: false,
+  error: null,
+  errorSource: null
 }
 
-export const loginSlice = createSlice({
+const loginSlice = createSlice({
   name: "login",
   initialState: LoginInitialState,
   reducers: {
-    login: (state, action: PayloadAction<ILoginState>) => {
-      ({ type: state.type, token: state.token, expired: state.expired } = action.payload);
-    },
-    logout: (state) => {
-      ({ type: state.type, token: state.token, expired: state.expired } = {
-        type: LoginType.none,
-        token: "",
-        expired: 0
-      })
-    }
+    
   },
   extraReducers: (builder) => {
-    builder.addCase(CoreActions.rehydrate, rehydrateHandler)
+    builder
+      .addCase(CoreActions.rehydrate, rehydrateHandler)
+      .addCase(loginAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.loading = false;
+      })
+      .addCase(loginAsync.rejected, (state, action) => {
+        state.loading = false;
+        const { error, errorSource } = action.payload as IAuthParams;
+        state.error = error;
+        state.errorSource = errorSource;
+      })
+      .addCase(registerAsync.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        state.loading = false;
+      })
+      .addCase(registerAsync.rejected, (state, action) => {
+        state.loading = false;
+        const { error, errorSource } = action.payload as IAuthParams;
+        state.error = error;
+        state.errorSource = errorSource;
+      });
   },
 });
 
-function rehydrateHandler(state: ILoginState, action: PayloadAction<IAppState>): ILoginState {
-  return newState(action.payload.login || state, {});
+function rehydrateHandler(): ILoginState {
+  return {...LoginInitialState};
 }
 
-export const { login, logout } = loginSlice.actions;
+export const loginAsync = createAsyncThunk<string, SignInRequestDto>(
+  "Login/Authorization",
+  async (signInRequest: SignInRequestDto, { rejectWithValue }) => {
+    try {
+      AuthHelper.checkAuthParams(signInRequest);
+      const uuid = await requestsRepository.authorizationApiRequest.signIn(signInRequest);
+      return uuid;
+    }
+    catch (error: any) {
+      const errors: string[] = error.message.filter((i: string | null) => i != null);
+
+      const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);
+      const passwordError = errors.some((i: string) => i == localization.errors.invalidPassword);
+      const errorSource = emailError && passwordError
+        ? "both"
+        : emailError
+          ? "email"
+          : "password";
+      const errorParams: IAuthParams = { ...signInRequest, errorSource, error: errors.join("\n") };
+      return rejectWithValue(errorParams);
+    }
+  }
+);
+
+export const registerAsync = createAsyncThunk<string, SignInRequestDto>(
+  "Login/Registration",
+  async (signInRequest: SignInRequestDto, { rejectWithValue }) => {
+    try {
+      AuthHelper.checkAuthParams(signInRequest);
+      const uuid = await requestsRepository.authorizationApiRequest.register(signInRequest);
+      return uuid;
+    }
+    catch (error: any) {
+      const errors: string[] = error.message.filter((i: string | null) => i != null);
+
+      const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);
+      const passwordError = errors.some((i: string) => i == localization.errors.invalidPassword);
+      const errorSource = emailError && passwordError
+        ? "both"
+        : emailError
+          ? "email"
+          : "password";
+      const errorParams: IAuthParams = { ...signInRequest, errorSource, error: errors.join("\n") };
+      return rejectWithValue(errorParams);
+    }
+  }
+);
+
 export default loginSlice.reducer;

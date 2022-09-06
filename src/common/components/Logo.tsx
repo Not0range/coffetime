@@ -1,4 +1,3 @@
-import { isUndefined } from "lodash";
 import React from "react";
 import { Text, TextStyle, View, ViewStyle } from "react-native";
 import { Fonts } from "../../core/theme";

@@ -1,7 +1,7 @@
 {
   "appName": "coffetime",
   "environment": "Development",
-  "serverUrl": "http://someserver.com",
+  "serverUrl": "http://ci2.dextechnology.com:8000/api",
   "identityUrl": "insert some here",
   "bugReportApiKey": "apikey",
   "useBugReporter": false,
@@ -9,8 +9,6 @@
   "build": 1,
   "showVersion": false,
   "supportUrl": "support@someaddress.com",
-  "vkClientId": "51405250",
-  "fbClientId": "348286724178990",
   "mapboxApiKey": "pk.eyJ1Ijoibm90b3JhbmdlIiwiYSI6ImNsNzJnYTl5ODB5MHkzeHM5NWVsY2tzemkifQ.EDUqnBFh-nORRa2LiBFKiw",
   "devOptions": {
     "useTestCase": false,

@@ -1,19 +1,12 @@
-import { applyMiddleware, Store } from "redux";
-import { configureStore as configure, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { configureStore as configure } from '@reduxjs/toolkit'
 import { persistStore, PersistConfig, persistReducer } from "redux-persist";
-import { buildStack } from "redux-stack";
 import { newState } from "../../common/newState";
 import { ignorePromise } from "../../common/utils";
-import { IEntitiesState } from "../../modules/entities/entitiesSlice";
 import { appSettingsProvider } from "../settings";
 import { getAppInitialState, IAppState } from "./AppState";
 import { createMainReducer } from "./createMainReducer";
 import AsyncStorage from "@react-native-community/async-storage";
-import { keyboardDismissOnNavigation } from "./init/keyboardClose";
-import { reduxLoggerInit } from "./init/loggerInit";
-import { promiseInit } from "./init/promiseInit";
 import { logger } from "./init/loggerInit";
-import promise from "redux-promise";
 
 export enum MigrateStoreMode {
   none = "none",
@@ -80,12 +73,11 @@ function tryProcessStateUpdate(state: IAppState): Promise<IAppState> {
       system: {
         buildNumber: appSettingsProvider.settings.build,
         authToken: nState.system.authToken,
-        refreshToken: nState.system.refreshToken,
       },
       entities: {
-        user: nState.entities.user,
         language: nState.entities.language,
-      } as IEntitiesState,
+        cafes: []
+      },
     });
   } else {
     resultState = Object.assign({}, AppInitialState, nState);
@@ -106,13 +98,12 @@ function resetStateWithToken(state: IAppState): Promise<IAppState> {
     {
       system: {
         buildNumber: appSettingsProvider.settings.build,
-        authToken: null,
-        refreshToken: null,
+        authToken: null
       },
       entities: {
-        user: null,
         language: state.entities.language,
-      } as IEntitiesState,
+        cafes: []
+      }
     }));
 }
 
@@ -128,11 +119,10 @@ function resetState(state: IAppState): Promise<IAppState> {
       system: {
         buildNumber: state.system.buildNumber,
         authToken: state.system.authToken,
-        refreshToken: state.system.refreshToken,
       },
       entities: {
-        user: state.entities.user,
         language: state.entities.language,
-      } as IEntitiesState,
+        cafes: []
+      }
     }));
 }

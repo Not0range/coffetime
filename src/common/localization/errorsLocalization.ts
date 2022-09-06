@@ -7,12 +7,14 @@ export const errorsLocalization = {
         "invalidPhone": "Telephone has to be at least 10 digits long",
         "invalidPassword": "Password has to be at least 6 characters long",
         "mandatoryField": "Required field",
-        "loginError": "Invalid telephone or password",
+        "loginError": "Invalid E-mail or password",
         "notFound": "Item not found",
         "noInternetConnection": "No server connection. Check your Internet connection",
         "error": "Error: ",
 
         "failedToConnect": "Failed to connect to the server.",
         "checkConnection": "Check your Internet connection and try again later.",
+
+        "geolocationError": "Geolocation service unavailable"
     },
 };
