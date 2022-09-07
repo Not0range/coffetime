@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { TouchableOpacity, Image, Animated, ImageStyle, ViewStyle, Text, TextStyle, View } from "react-native";
 import { IconsResources } from "../../../common/ImageResources.g";
 import { styleSheetCreate } from "../../../common/utils";
-import { Colors, CommonStyles } from "../../../core/theme";
 
 interface IProps {
   liked: boolean;
@@ -48,7 +47,7 @@ export const LikeButton: React.FC<IProps> = (props) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Animated.View style={iconStyle}>
-      <Image
+        <Image
           source={liked ? IconsResources.icon_heart_active : IconsResources.icon_heart_gray}
           style={styles.icon}
         />

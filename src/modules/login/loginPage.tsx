@@ -1,6 +1,5 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import { PayloadAction } from "@reduxjs/toolkit";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, ImageBackground, Keyboard, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
@@ -14,9 +13,8 @@ import { styleSheetCreate } from "../../common/utils";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { Colors, CommonStyles } from "../../core/theme";
 import { RootStackParamList } from "../../navigation/RootNavigation";
-import { IAuthParams, loginAsync } from "./loginSlice";
-
-import Toast from "react-native-simple-toast";
+import { IAuthParams, loginAsync, resetError } from "./loginSlice";
+import DevMenu from "react-native-dev-menu";
 
 type Props = StackScreenProps<RootStackParamList, "Login">;
 
@@ -34,6 +32,15 @@ export const LoginPage: React.FC<Props> = (props) => {
   useEffect(() => {
     if (authToken != null)
       props.navigation.dispatch(goToMainPage);
+  }, []);
+
+  useEffect(() => {
+    if (__DEV__) {
+      DevMenu.addItem(
+        "Navigate To Playground",
+        () => props.navigation.navigate("Playground"),
+      );
+    }
   }, []);
 
   const onInputForPasswordSubmit = (): void => {
@@ -55,9 +62,10 @@ export const LoginPage: React.FC<Props> = (props) => {
       else
         Alert.alert(localization.errors.error, (result.payload as IAuthParams).error);
     });
-  }
+  };
 
   const registration = () => {
+    dispatch(resetError());
     props.navigation.navigate("Registration");
   };
 

@@ -22,6 +22,8 @@ export class IconsResources {
     static readonly icon_pressure: ImageURISource = require("../../resources/images/icons/icon_pressure.png");
     static readonly icon_water: ImageURISource = require("../../resources/images/icons/icon_water.png");
     static readonly icon_temperature: ImageURISource = require("../../resources/images/icons/icon_temperature.png");
+    static readonly icon_swich_pin_active: ImageURISource = require("../../resources/images/icons/icon_swich_pin_active.png");
+    static readonly icon_swich_pin: ImageURISource = require("../../resources/images/icons/icon_swich_pin.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");

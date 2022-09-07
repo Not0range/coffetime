@@ -31,7 +31,10 @@ const loginSlice = createSlice({
   name: "login",
   initialState: LoginInitialState,
   reducers: {
-
+    resetError: (state) => {
+      state.error = "";
+      state.errorSource = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -77,7 +80,7 @@ export const loginAsync = createAsyncThunk<string, SignInRequestDto>(
     }
     catch (error: any) {
       if (error.name == ExceptionType.Connection)
-        Toast.show(`${error}`);
+        return rejectWithValue({ error: localization.errors.loginError, errorSource: "both" });
 
       if (error.innerError instanceof NoAuthError)
         return rejectWithValue({ error: localization.errors.loginError, errorSource: "both" });
@@ -106,8 +109,8 @@ export const registerAsync = createAsyncThunk<string, SignInRequestDto>(
     }
     catch (error: any) {
       if (error.name == ExceptionType.Connection)
-        Toast.show(`${error}`);
-      
+        return rejectWithValue({ error: localization.errors.loginError, errorSource: "both" });
+
       const errors: string[] = error.message.filter((i: string | null) => i != null);
 
       const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);
@@ -123,4 +126,5 @@ export const registerAsync = createAsyncThunk<string, SignInRequestDto>(
   }
 );
 
+export const { resetError } = loginSlice.actions;
 export default loginSlice.reducer;

@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import _ from "lodash";
-import React, { useEffect } from "react";
-import { ImageBackground, ImageStyle, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ImageBackground, ImageStyle, Text, TextStyle, TouchableOpacity, useWindowDimensions, View, ViewStyle } from "react-native";
 import { GridWrapper } from "../../common/components/GridWrapper";
 import { LoadingView } from "../../common/components/LoadingView";
 import { ImageResources } from "../../common/ImageResources.g";
@@ -14,11 +14,14 @@ import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { MainStackParamList } from "../../navigation/MainNavigation";
 import { setCurrentDrink } from "../currentDrink/currentDrinkSlice";
 import { DrinkCard } from "../favoritesDrinks/components/DrinkCard";
+import { LikeSwitch } from "./components/LikeSwitch";
 import { getProductsCafeAsync } from "./currentCafeSlice";
 
 type Props = StackScreenProps<MainStackParamList, "CurrentCafe">;
 
 export const CurrentCafePage: React.FC<Props> = (props) => {
+  const [liked, setLiked] = useState(false);
+
   const { currentCafe, drinks, loading } = useAppSelector(state => state.currentCafe);
   const sessionId = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
@@ -29,19 +32,26 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
 
   const loadData = () => {
     if (sessionId && currentCafe)
-      dispatch(getProductsCafeAsync({sessionId, cafeId: currentCafe.id}));
+      dispatch(getProductsCafeAsync({ sessionId, cafeId: currentCafe.id }));
   }
 
   const { width } = useWindowDimensions();
-  const imageStyle = styleSheetFlatten(styles.cafeImage, { width, aspectRatio: 1 })
+  const imageStyle = styleSheetFlatten(styles.cafeImage, { width, aspectRatio: 1 });
+
+  const likedChange = () => {
+    setLiked(!liked);
+  }
 
   const cafeHeader: React.FC = () => {
     return (
       <ImageBackground source={{ uri: currentCafe?.images }} style={imageStyle} defaultSource={ImageResources.image_no_coffe}>
         <View style={CommonStyles.flex1} />
-        <View>
-          <Text style={styles.title}>{currentCafe?.name}</Text>
-          <Text style={styles.address}>{currentCafe?.address}</Text>
+        <View style={styles.imageBottom}>
+          <View style={CommonStyles.flex1}>
+            <Text style={styles.title}>{currentCafe?.name}</Text>
+            <Text style={styles.address}>{currentCafe?.address}</Text>
+          </View>
+          <LikeSwitch enabled={liked} onValueChange={likedChange} style={styles.switch} />
         </View>
       </ImageBackground>
     )
@@ -73,7 +83,7 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
     props.navigation.navigate("CurrentDrink");
   }
 
-  const loadState = loading ? LoadState.firstLoad : 
+  const loadState = loading ? LoadState.firstLoad :
     !loading && drinks.length > 0 ? LoadState.idle : LoadState.error;
 
   return (
@@ -127,13 +137,20 @@ const styles = styleSheetCreate({
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 28,
-    marginHorizontal: 16,
+    marginHorizontal: 6,
     color: Colors.white
   } as TextStyle,
   address: {
     fontFamily: Fonts.regular,
     fontSize: 18,
-    marginHorizontal: 16,
+    marginHorizontal: 6,
     color: Colors.white
-  } as TextStyle
+  } as TextStyle,
+  imageBottom: {
+    marginHorizontal: 10,
+    flexDirection: "row"
+  } as ViewStyle,
+  switch: {
+    alignSelf: "flex-end"
+  } as ViewStyle
 });

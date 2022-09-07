@@ -1,6 +1,6 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, ImageBackground, Keyboard, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
 import { LoadingModal } from "../../common/components/LoadingModal";
@@ -13,7 +13,7 @@ import { styleSheetCreate } from "../../common/utils";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { Colors, CommonStyles } from "../../core/theme";
 import { RootStackParamList } from "../../navigation/RootNavigation";
-import { IAuthParams, registerAsync } from "../login/loginSlice";
+import { IAuthParams, registerAsync, resetError } from "../login/loginSlice";
 
 type Props = StackScreenProps<RootStackParamList, "Registration">;
 
@@ -44,6 +44,11 @@ export const RegistrationPage: React.FC<Props> = (props) => {
         Alert.alert(localization.errors.error, (result.payload as IAuthParams).error);
     });
   };
+
+  const goBack = () => {
+    dispatch(resetError());
+    props.navigation.goBack();
+  }
 
   return (
     <View style={CommonStyles.flex1}>
@@ -95,7 +100,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
                 type={ButtonType.Action}
                 title={localization.common.back}
                 style={styles.button}
-                onPress={props.navigation.goBack}
+                onPress={goBack}
               />
             </View>
           </View>

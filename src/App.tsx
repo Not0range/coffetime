@@ -62,8 +62,6 @@ function createStore(mode: MigrateStoreMode) {
 }
 
 function onStoreConfigured() {
-  
-
   const s = store;
   const state = s.getState();
 
