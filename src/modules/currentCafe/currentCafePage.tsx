@@ -1,9 +1,8 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import { ImageBackground, ImageStyle, Text, TextStyle, TouchableOpacity, useWindowDimensions, View, ViewStyle } from "react-native";
+import { ImageBackground, ImageStyle, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
 import { GridWrapper } from "../../common/components/GridWrapper";
-import { LoadingView } from "../../common/components/LoadingView";
 import { ImageResources } from "../../common/ImageResources.g";
 import { LoadState } from "../../common/loadState";
 import { localization } from "../../common/localization/localization";
@@ -147,7 +146,8 @@ const styles = styleSheetCreate({
     color: Colors.white
   } as TextStyle,
   imageBottom: {
-    marginHorizontal: 10,
+    marginLeft: 10,
+    marginRight: 20,
     flexDirection: "row"
   } as ViewStyle,
   switch: {
