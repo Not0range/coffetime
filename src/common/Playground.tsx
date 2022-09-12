@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, ViewStyle } from "react-native";
 import { Colors, CommonStyles } from "../core/theme";
 import { LikeSwitch } from "../modules/currentCafe/components/LikeSwitch";
-import { LikeButton } from "../modules/currentDrink/components/LikeButton";
+import { LikeButton } from "./components/LikeButton";
 import { Logo } from "./components/Logo";
 import { styleSheetCreate } from "./utils";
 

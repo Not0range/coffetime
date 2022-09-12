@@ -48,7 +48,7 @@ const currentDrinkSlice = createSlice({
           state.currentDrinkFull.favarite = true;
       })
       .addCase(setFavoriteAsync.rejected, (state, action) => {
-        if (state.currentDrinkFull && state.currentDrinkFull.id == (action.payload as string))
+        if (state.currentDrinkFull && state.currentDrinkFull.id == action.meta.arg.productId)
           state.currentDrinkFull.favarite = false;
       })
       .addCase(unsetFavoriteAsync.pending, (state, action) => {
@@ -56,7 +56,7 @@ const currentDrinkSlice = createSlice({
           state.currentDrinkFull.favarite = false;
       })
       .addCase(unsetFavoriteAsync.rejected, (state, action) => {
-        if (state.currentDrinkFull && state.currentDrinkFull.id == (action.payload as string))
+        if (state.currentDrinkFull && state.currentDrinkFull.id == action.meta.arg.productId)
           state.currentDrinkFull.favarite = true;
       })
   }

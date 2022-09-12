@@ -14,6 +14,7 @@ import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { MainStackParamList } from "../../navigation/MainNavigation";
 import { setCurrentDrink } from "../currentDrink/currentDrinkSlice";
 import { DrinkCard } from "../favoritesDrinks/components/DrinkCard";
+import { setFavoriteAsync, unsetFavoriteAsync } from "../favoritesDrinks/favoriteDrinksSlice";
 import { LikeSwitch } from "./components/LikeSwitch";
 import { getProductsCafeAsync } from "./currentCafeSlice";
 
@@ -74,6 +75,7 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
             style={styles.item}
             size={(width) / 2}
             onPress={() => openDrink(t)}
+            onLikePress={() => likeDrink(t)}
           /> :
           <View key={`e${empty++}`} style={styles.empty} />)}
       </View>
@@ -83,7 +85,16 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
   const openDrink = (item: Product) => {
     dispatch(setCurrentDrink(item));
     props.navigation.navigate("CurrentDrink");
-  }
+  };
+
+  const likeDrink = (item: Product) => {
+    if (!sessionId) return;
+    
+    if (!item.favorite)
+      dispatch(setFavoriteAsync({ sessionId, productId: item.id }));
+    else
+      dispatch(unsetFavoriteAsync({ sessionId, productId: item.id }));
+  };
 
   const loadState = loading ? LoadState.firstLoad :
     !loading && drinks.length > 0 ? LoadState.idle : LoadState.error;

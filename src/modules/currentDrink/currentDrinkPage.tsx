@@ -11,7 +11,7 @@ import { Attribute } from "../../core/api/generated/dto/ProductFull.g";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { setFavoriteAsync, unsetFavoriteAsync } from "../favoritesDrinks/favoriteDrinksSlice";
-import { LikeButton } from "./components/LikeButton";
+import { LikeButton } from "../../common/components/LikeButton";
 import { getProductFullAsync } from "./currentDrinkSlice";
 
 const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus bibendum interdum. Curabitur ornare consectetur purus id tincidunt. Morbi at cursus arcu. Aliquam et metus ligula. Proin vel erat lectus. Phasellus ullamcorper augue lectus. Nam tincidunt cursus ex vitae tristique. Donec interdum massa ac orci bibendum, vel consectetur dui facilisis. Curabitur cursus malesuada arcu. Nulla facilisi. Pellentesque finibus nulla eros, eu egestas ex porttitor id. In placerat porta cursus. Vestibulum fringilla id justo quis gravida. Duis libero risus, fringilla in augue eu, gravida consequat eros.";

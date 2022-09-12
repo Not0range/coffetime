@@ -13,7 +13,7 @@ import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { MainStackParamList } from "../../navigation/MainNavigation";
 import { setCurrentDrink } from "../currentDrink/currentDrinkSlice";
 import { DrinkCard } from "./components/DrinkCard";
-import { getFavoriteDrinksAsync } from "./favoriteDrinksSlice";
+import { getFavoriteDrinksAsync, setFavoriteAsync, unsetFavoriteAsync } from "./favoriteDrinksSlice";
 
 type Props = StackScreenProps<MainStackParamList, "FavoriteDrinks">;
 
@@ -47,6 +47,7 @@ export const FavoriteDrinksPage: React.FC<Props> = (props) => {
             style={styles.item}
             size={(width) / 2}
             onPress={() => openDrink(t)}
+            onLikePress={() => likeDrink(t)}
           /> :
           <View key={`e${empty++}`} style={styles.empty} />)}
       </View>
@@ -56,6 +57,15 @@ export const FavoriteDrinksPage: React.FC<Props> = (props) => {
   const openDrink = (item: Product) => {
     dispatch(setCurrentDrink(item));
     props.navigation.navigate("CurrentDrink");
+  };
+
+  const likeDrink = (item: Product) => {
+    if (!sessionId) return;
+    
+    if (!item.favorite)
+      dispatch(setFavoriteAsync({ sessionId, productId: item.id }));
+    else
+      dispatch(unsetFavoriteAsync({ sessionId, productId: item.id }));
   };
 
   const loadState = loading ? LoadState.firstLoad : 

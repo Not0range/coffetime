@@ -43,15 +43,25 @@ const currentCafeSlice = createSlice({
       .addCase(getProductsCafeAsync.rejected, (state) => {
         state.loading = false;
       })
-      .addCase(setFavoriteAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        const drink = state.drinks.find(t => t.id == action.payload);
+      .addCase(setFavoriteAsync.pending, (state, action) => {
+        const drink = state.drinks.find(t => t.id == action.meta.arg.productId);
         if (drink)
           drink.favorite = true;
       })
-      .addCase(unsetFavoriteAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        const drink = state.drinks.find(t => t.id == action.payload);
+      .addCase(setFavoriteAsync.rejected, (state, action) => {
+        const drink = state.drinks.find(t => t.id == action.meta.arg.productId);
         if (drink)
           drink.favorite = false;
+      })
+      .addCase(unsetFavoriteAsync.pending, (state, action) => {
+        const drink = state.drinks.find(t => t.id == action.meta.arg.productId);
+        if (drink)
+          drink.favorite = false;
+      })
+      .addCase(unsetFavoriteAsync.rejected, (state, action) => {
+        const drink = state.drinks.find(t => t.id == action.meta.arg.productId);
+        if (drink)
+          drink.favorite = true;
       })
   }
 });

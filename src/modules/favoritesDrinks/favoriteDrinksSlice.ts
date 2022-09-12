@@ -42,15 +42,25 @@ const favoriteDrinksSlice = createSlice({
         state.loading = false;
         state.error = true;
       })
-      .addCase(setFavoriteAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        const drink = state.favoriteDrinks.find(t => t.id == action.payload);
+      .addCase(setFavoriteAsync.pending, (state, action) => {
+        const drink = state.favoriteDrinks.find(t => t.id == action.meta.arg.productId);
         if (drink)
           drink.favorite = true;
       })
-      .addCase(unsetFavoriteAsync.fulfilled, (state, action: PayloadAction<string>) => {
-        const drink = state.favoriteDrinks.findIndex(t => t.id == action.payload);
-        if (drink != -1)
-          state.favoriteDrinks.splice(drink, 1);
+      .addCase(setFavoriteAsync.rejected, (state, action) => {
+        const drink = state.favoriteDrinks.find(t => t.id == action.meta.arg.productId);
+        if (drink)
+          drink.favorite = false;
+      })
+      .addCase(unsetFavoriteAsync.pending, (state, action) => {
+        const drink = state.favoriteDrinks.find(t => t.id == action.meta.arg.productId);
+        if (drink)
+          drink.favorite = false;
+      })
+      .addCase(unsetFavoriteAsync.rejected, (state, action) => {
+        const drink = state.favoriteDrinks.find(t => t.id == action.meta.arg.productId);
+        if (drink)
+          drink.favorite = true;
       })
   }
 })

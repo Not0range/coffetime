@@ -1,5 +1,6 @@
 import React from "react";
 import { ViewProps, ImageSourcePropType, View, TouchableOpacity, Text, Image, ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { LikeButton } from "../../../common/components/LikeButton";
 import { IconsResources, ImageResources } from "../../../common/ImageResources.g";
 import { styleSheetCreate, styleSheetFlatten } from "../../../common/utils";
 import { CommonStyles, Fonts } from "../../../core/theme";
@@ -9,28 +10,27 @@ interface IProps extends ViewProps {
   type: string;
   image: ImageSourcePropType;
   onPress?: () => void;
+  onLikePress?: () => void;
   liked: boolean;
   price: number;
   size: number;
 }
 
 export const DrinkCard: React.FC<IProps> = (props: IProps) => {
-  const imageStyle = styleSheetFlatten(styles.image, {width: props.size});
+  const { liked, onPress, onLikePress, title, type, image, price, size } = props;
+  const imageStyle = styleSheetFlatten(styles.image, { width: size });
   return (
     <View style={styleSheetFlatten(styles.container, props.style, CommonStyles.shadow)}>
-      <TouchableOpacity style={styles.card} onPress={props.onPress}>
-        <Text style={styles.title}>{props.title}</Text>
-        <Text style={styles.drinkType}>{props.type}</Text>
-        <Image source={props.image} resizeMode={"center"} style={imageStyle} defaultSource={ImageResources.image_no_coffe} />
+      <TouchableOpacity style={styles.card} onPress={onPress}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.drinkType}>{type}</Text>
+        <Image source={image} resizeMode={"center"} style={imageStyle} defaultSource={ImageResources.image_no_coffe} />
         <View style={styles.row}>
-          <Text style={styles.price}>{props.price}</Text>
-          <View style={styles.ruble}>
-            <Image source={IconsResources.icon_ruble} />
+          <Text style={styles.price}>{price}</Text>
+          <Image source={IconsResources.icon_ruble} />
+          <View style={styles.likeContainer}>
+            <LikeButton liked={liked} onPress={onLikePress} />
           </View>
-          <Image
-            source={props.liked ? IconsResources.icon_heart_active : IconsResources.icon_heart_gray}
-            style={styles.likeIcon}
-          />
         </View>
       </TouchableOpacity>
     </View>
@@ -74,8 +74,9 @@ const styles = styleSheetCreate({
   ruble: {
     flex: 1
   } as ImageStyle,
-  likeIcon: {
-    width: 24,
-    height: 24
+  likeContainer: {
+    flex: 1, 
+    alignItems: "flex-end",
+    paddingHorizontal: 30
   } as ImageStyle
 });
