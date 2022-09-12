@@ -4,7 +4,7 @@ import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { Alert, AlertButton, BackHandler, Image, ImageStyle, TouchableOpacity, View, ViewStyle } from "react-native";
-import { IconsResources } from "../common/ImageResources.g";
+import { IconsResources, ImageResources } from "../common/ImageResources.g";
 import { localization } from "../common/localization/localization";
 import { styleSheetCreate } from "../common/utils";
 import { useAppDispatch, useAppSelector } from "../core/store/hooks";
@@ -56,7 +56,7 @@ export const MapAndList: React.FC<Props> = (props) => {
   }];
   const goBack = () => Alert.alert(localization.common.warning, localization.common.exitQuestion, buttons);
   const headerLeft = () => (
-    <HeaderBackButton onPress={goBack} />
+    <HeaderBackButton onPress={goBack} backImage={() => <Image source={ImageResources.image_back} />} />
   )
   useEffect(() => {
     props.navigation.setOptions({ headerLeft, headerRight });

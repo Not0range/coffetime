@@ -1,8 +1,9 @@
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
 import { CommonActions, StackNavigationState } from "@react-navigation/native"
-import { StackNavigationOptions, StackNavigationProp } from "@react-navigation/stack"
+import { StackNavigationOptions } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { TouchableOpacity, View, ViewStyle } from "react-native"
+import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
+import { ImageResources } from "../../common/ImageResources.g"
 import { styleSheetCreate } from "../../common/utils"
 import { RootStackParamList } from "../../navigation/RootNavigation"
 import { Colors } from "./colors"
@@ -16,7 +17,8 @@ export const headerOptions: StackNavigationOptions = {
     margin: 8,
     fontFamily: Fonts.lobster,
     fontSize: 22
-  }
+  },
+  headerBackImage: () => <Image source={ImageResources.image_back} />
 }
 
 interface HeaderStyle {
