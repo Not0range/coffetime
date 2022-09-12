@@ -2,6 +2,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { ImageBackground, ImageStyle, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import { GridWrapper } from "../../common/components/GridWrapper";
 import { ImageResources } from "../../common/ImageResources.g";
 import { LoadState } from "../../common/loadState";
@@ -43,16 +44,18 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
 
   const cafeHeader: React.FC = () => {
     return (
-      <ImageBackground source={{ uri: currentCafe?.images }} style={imageStyle} defaultSource={ImageResources.image_no_coffe}>
-        <View style={CommonStyles.flex1} />
-        <View style={styles.imageBottom}>
-          <View style={CommonStyles.flex1}>
-            <Text style={styles.title}>{currentCafe?.name}</Text>
-            <Text style={styles.address}>{currentCafe?.address}</Text>
+      <ImageBackground source={{ uri: currentCafe?.images }} defaultSource={ImageResources.image_no_coffe} style={imageStyle}>
+        <LinearGradient start={{x: 0, y: 0.52}} end={{x: 0, y: 1}} colors={["#FFFFFF00", "#F7ECDAFF"]} style={styles.gradient}>
+          <View style={CommonStyles.flex1} />
+          <View style={styles.imageBottom}>
+            <View style={CommonStyles.flex1}>
+              <Text style={styles.title}>{currentCafe?.name}</Text>
+              <Text style={styles.address}>{currentCafe?.address}</Text>
+            </View>
+            <LikeSwitch enabled={liked} onValueChange={likedChange} style={styles.switch} />
           </View>
-          <LikeSwitch enabled={liked} onValueChange={likedChange} style={styles.switch} />
-        </View>
-      </ImageBackground>
+        </LinearGradient>
+      </ImageBackground >
     )
   };
 
@@ -88,7 +91,7 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
   return (
     <View style={CommonStyles.flex1}>
       <GridWrapper
-        ListHeaderComponent={cafeHeader}
+        ListHeaderComponent={<View children={cafeHeader({})} />}
         data={drinks}
         keyExtractor={keyExtractor}
         renderItem={renderDrinks}
@@ -109,8 +112,7 @@ function keyExtractor(items: Product[]): string {
 const styles = styleSheetCreate({
   container: {
     flex: 1,
-    backgroundColor: Colors.gray,
-    padding: 4
+    backgroundColor: Colors.gray
   } as ViewStyle,
   grid: {
     flex: 1,
@@ -121,29 +123,26 @@ const styles = styleSheetCreate({
     aspectRatio: 1.25
   } as ViewStyle,
   item: {
-    backgroundColor: Colors.white
+    backgroundColor: Colors.white,
+    margin: 4
   } as ViewStyle,
   empty: {
     flex: 1,
     padding: 4,
-    margin: 4,
+    margin: 4
   } as ViewStyle,
   cafeImage: {
-    alignContent: "flex-end",
-    marginBottom: 8,
-    paddingBottom: 8
+    alignContent: "flex-end"
   } as ViewStyle,
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 28,
-    marginHorizontal: 6,
-    color: Colors.white
+    marginHorizontal: 6
   } as TextStyle,
   address: {
     fontFamily: Fonts.regular,
     fontSize: 18,
-    marginHorizontal: 6,
-    color: Colors.white
+    marginHorizontal: 6
   } as TextStyle,
   imageBottom: {
     marginLeft: 10,
@@ -152,5 +151,10 @@ const styles = styleSheetCreate({
   } as ViewStyle,
   switch: {
     alignSelf: "flex-end"
+  } as ViewStyle,
+  gradient: {
+    flex: 1,
+    marginBottom: 8,
+    paddingBottom: 8
   } as ViewStyle
 });
