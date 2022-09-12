@@ -1,8 +1,8 @@
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Alert, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
-import { Colors, CommonStyles, Fonts } from "../../core/theme";
+import {  CommonStyles, Fonts } from "../../core/theme";
 import { ShopsStackParamList } from "../../navigation/MapAndListNavigation";
 import MapboxGL from "@rnmapbox/maps";
 import Geolocation from '@react-native-community/geolocation';
@@ -13,8 +13,7 @@ import { appSettingsProvider } from "../../core/settings";
 import { localization } from "../../common/localization/localization";
 import { useAppSelector } from "../../core/store/hooks";
 import { Cafe } from "../../core/api/generated/dto/Cafe.g";
-import { MainButton } from "../../common/components/MainButton";
-import { ButtonType } from "../../common/enums/buttonType";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 MapboxGL.setWellKnownTileServer("Mapbox")
 MapboxGL.setAccessToken(appSettingsProvider.settings.mapboxApiKey);
@@ -89,22 +88,20 @@ export const Map: React.FC<Props> = (props) => {
     setPosition(-nativeEvent.layout.height);
   };
 
-  const animatedValue = useRef(new Animated.Value(-90)).current;
+  const animatedValue = useSharedValue(-90);
 
   useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: selected != "" ? 0 : position,
-      duration: 300,
-      useNativeDriver: false
-    }).start();
+    animatedValue.value = withTiming(selected != "" ? 0 : position, {
+      duration: 300
+    });
   }, [selected]);
 
-  const overlayStyle: ViewStyle = {
+  const overlayStyle = useAnimatedStyle(() => ({
     position: "absolute",
     left: 40,
     right: 40,
-    bottom: animatedValue as any
-  }
+    bottom: animatedValue.value
+  }))
 
   const selectedCafe = cafes?.find(t => t.id == selected);
 
