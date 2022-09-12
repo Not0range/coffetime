@@ -2,7 +2,7 @@ import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
-import {  CommonStyles, Fonts } from "../../core/theme";
+import { CommonStyles, Fonts } from "../../core/theme";
 import { ShopsStackParamList } from "../../navigation/MapAndListNavigation";
 import MapboxGL from "@rnmapbox/maps";
 import Geolocation from '@react-native-community/geolocation';
@@ -11,18 +11,24 @@ import { PointAnnotation } from "./components/PointAnnotation";
 import calculateDistance from "@turf/distance"
 import { appSettingsProvider } from "../../core/settings";
 import { localization } from "../../common/localization/localization";
-import { useAppSelector } from "../../core/store/hooks";
+import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { Cafe } from "../../core/api/generated/dto/Cafe.g";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import _ from "lodash";
+import { getAllCafeAsync } from "../cafes/cafeSlice";
 
 MapboxGL.setWellKnownTileServer("Mapbox")
 MapboxGL.setAccessToken(appSettingsProvider.settings.mapboxApiKey);
 MapboxGL.setConnected(true);
 
+const zoomFactor = 5.25;
+
 type Props = MaterialTopTabScreenProps<ShopsStackParamList, "Map">;
 
 export const Map: React.FC<Props> = (props) => {
   const cafes = useAppSelector(state => state.entities.cafes);
+  const sessionId = useAppSelector(state => state.system.authToken);
+  const dispatch = useAppDispatch();
 
   const [userCoords, setUserCoords] = useState([0, 0]);
   const [cameraCoords, setCameraCoords] = useState([0, 0]);
@@ -49,10 +55,8 @@ export const Map: React.FC<Props> = (props) => {
     )
   };
 
-  const setCenter = (pos: any) => {
+  const setUserPosition = (pos: any) => {
     setUserCoords([pos.coords.longitude, pos.coords.latitude]);
-    setCameraCoords([pos.coords.longitude, pos.coords.latitude]);
-    setZoom(15);
     setLocatingVisible(true);
   };
 
@@ -61,9 +65,24 @@ export const Map: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
+    if (sessionId)
+      dispatch(getAllCafeAsync(sessionId)).then(result => {
+        if (result.meta.requestStatus != "fulfilled") return;
+
+        const coords = cafes.map(t => stringToCoordinates(t.coordinates));
+        const avgLong = _.sumBy(coords, t => t[0]) / coords.length;
+        const avgLat = _.sumBy(coords, t => t[1]) / coords.length;
+        setCameraCoords([avgLong, avgLat]);
+
+        const zoom = _.max(coords.map(t => calculateDistance(cameraCoords, t, {units: "degrees"}))) || 0;
+        setZoom(zoom / zoomFactor);
+      });
+  }, []);
+
+  useEffect(() => {
     let timerId: number | null = null;
     Geolocation.getCurrentPosition(pos => {
-      setCenter(pos);
+      setUserPosition(pos);
     }, error => {
       if (error.code == 1)
         Geolocation.requestAuthorization();
@@ -72,7 +91,7 @@ export const Map: React.FC<Props> = (props) => {
 
       timerId = setInterval(() => {
         Geolocation.getCurrentPosition(pos => {
-          setCenter(pos);
+          setUserPosition(pos);
           if (timerId)
             clearInterval(timerId);
         }, error => {

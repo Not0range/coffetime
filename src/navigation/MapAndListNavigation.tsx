@@ -28,7 +28,6 @@ export type ShopsStackParamList = {
 const Tabs = createMaterialTopTabNavigator<ShopsStackParamList>();
 
 export const MapAndList: React.FC<Props> = (props) => {
-  const sessionId = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
 
   const goToFavorite = () => props.navigation.navigate("FavoriteDrinks");
@@ -60,10 +59,6 @@ export const MapAndList: React.FC<Props> = (props) => {
   )
   useEffect(() => {
     props.navigation.setOptions({ headerLeft, headerRight });
-  }, []);
-
-  useEffect(() => {
-    dispatch(getAllCafeAsync(`${sessionId}`));
   }, []);
 
   return (
