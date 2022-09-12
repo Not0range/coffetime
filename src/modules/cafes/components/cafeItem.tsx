@@ -13,7 +13,7 @@ interface IProps {
   onPress?: () => void;
 }
 
-export const CafeItem: React.FC<IProps> = (props: IProps) => {
+export const CafeItem: React.FC<IProps> = (props) => {
   return (
     <View style={styleSheetFlatten(styles.container, CommonStyles.shadow)}>
       <Image source={props.image} style={styles.image} defaultSource={ImageResources.image_no_coffe} />
