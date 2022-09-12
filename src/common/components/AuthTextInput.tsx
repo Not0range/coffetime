@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Animated, Image, ImageStyle, ImageURISource, Insets, TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Image, ImageStyle, ImageURISource, Insets, TextInput, TextInputProps, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { Colors, Fonts, isIos } from "../../core/theme";
 import { styleSheetCreate, styleSheetFlatten } from "../utils";
 
@@ -18,29 +19,21 @@ export const AuthTextInput: React.FC<IProps> = (props) => {
   const [isFocused, setIsFocused] = useState(false);
   const { label, isError, containerStyle, ...p } = props;
 
-  const animatedValue = new Animated.Value(props.value == "" ? 0 : 1);
+  const animatedValue = useSharedValue(props.value == "" ? 0 : 1);
 
   useEffect(() => {
-    Animated.timing(animatedValue, {
-      toValue: (isFocused || props.value != "") ? 1 : 0,
-      duration: 200,
-      useNativeDriver: false
-    }).start()
+    animatedValue.value = withTiming(isFocused || props.value != "" ? 1 : 0, {
+      duration: 200
+    });
   }, [isFocused, props.value]);
 
-  const labelStyle: TextStyle = {
+  const labelStyle = useAnimatedStyle(() => ({
     position: "absolute",
     left: isIos ? 5 : 7,
-    top: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [18, 0],
-    }) as any,
-    fontSize: animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [20, 14],
-    }) as any,
+    top: interpolate(animatedValue.value, [0, 1], [18, 0]),
+    fontSize: interpolate(animatedValue.value, [0, 1], [20, 14]),
     color: isError ? Colors.paleRed : Colors.black,
-  };
+  }));
   const container = styleSheetFlatten(
     [isError && isFocused
       ? styles.errorContainer

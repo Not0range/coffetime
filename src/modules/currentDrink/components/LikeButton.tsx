@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Image, Animated, ImageStyle, ViewStyle, Text, TextStyle, View } from "react-native";
+import { TouchableOpacity, Image, ImageStyle } from "react-native";
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { IconsResources } from "../../../common/ImageResources.g";
 import { styleSheetCreate } from "../../../common/utils";
 
@@ -13,36 +14,25 @@ export const LikeButton: React.FC<IProps> = (props) => {
 
   const { liked, onPress } = props;
 
-  const animatedValue = new Animated.Value(liked ? 0 : 2);
+  const animatedValue = useSharedValue(liked ? 0 : 2);
 
   useEffect(() => {
     if (firstRender) {
       setFirstRender(false);
       return;
     }
-    Animated.timing(animatedValue, {
-      toValue: liked ? 2 : 0,
-      duration: 500,
-      useNativeDriver: false
-    }).start();
+    animatedValue.value = withTiming(liked ? 0 : 2, {
+      duration: 500
+    })
   }, [liked]);
 
-  const iconStyle: ImageStyle = {
+  const iconStyle = useAnimatedStyle(() => ({
     position: "absolute",
     aspectRatio: 1,
-    top: animatedValue.interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: [-16, -24, -16]
-    }) as any,
-    bottom: animatedValue.interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: [-16, -24, -16]
-    }) as any,
-    left: animatedValue.interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: [0, -8, 0]
-    }) as any,
-  };
+    top: interpolate(animatedValue.value, [0, 1, 2], [-16, -24, -16]),
+    bottom: interpolate(animatedValue.value, [0, 1, 2], [-16, -24, -16]),
+    left: interpolate(animatedValue.value, [0, 1, 2], [0, -8, 0])
+  }));
 
   return (
     <TouchableOpacity onPress={onPress}>
