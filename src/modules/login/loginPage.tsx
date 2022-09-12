@@ -26,13 +26,7 @@ export const LoginPage: React.FC<Props> = (props) => {
   const [loginPromise, setLoginPromise] = useState<any>(null);
 
   const { loading: loadingState, errorSource } = useAppSelector(state => state.login);
-  const authToken = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (authToken != null)
-      props.navigation.dispatch(goToMainPage);
-  }, []);
 
   useEffect(() => {
     if (__DEV__) {
