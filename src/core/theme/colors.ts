@@ -8,8 +8,10 @@ export class Colors {
   static red = "#CE3C3E";
   static orange = "#EB9E3E";
   static white88 = "#F5FCFF88";
+  static gray47 = "#474747";
   static gray71 = "#717171";
   static grayB = "#BBBBBB";
+  static grayEA = "#BBBBBB";
   static transparent = "transparent";
   
   static whiteTwo = "#ebebeb";

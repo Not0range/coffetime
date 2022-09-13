@@ -34,6 +34,7 @@ export class ImageResources {
     static readonly user_white: ImageURISource = require("../../resources/images/user_white.png");
     static readonly user: ImageURISource = require("../../resources/images/user.png");
     static readonly image_no_coffe: ImageURISource = require("../../resources/images/image_no_coffe.png");
+    static readonly image_hit: ImageURISource = require("../../resources/images/image_hit.png");
 }
 
 export class CoffeeShopImages {

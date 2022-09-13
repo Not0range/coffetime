@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Image, ImageStyle, ImageURISource, ScrollView, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, ImageBackground, ImageStyle, ImageURISource, ScrollView, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
 import { LoadingView } from "../../common/components/LoadingView";
 import { MainButton } from "../../common/components/MainButton";
 import { ButtonType } from "../../common/enums/buttonType";
@@ -12,10 +12,14 @@ import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { setFavoriteAsync, unsetFavoriteAsync } from "../favoritesDrinks/favoriteDrinksSlice";
 import { LikeButton } from "../../common/components/LikeButton";
 import { getProductFullAsync } from "./currentDrinkSlice";
+import _ from "lodash";
 
 const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus bibendum interdum. Curabitur ornare consectetur purus id tincidunt. Morbi at cursus arcu. Aliquam et metus ligula. Proin vel erat lectus. Phasellus ullamcorper augue lectus. Nam tincidunt cursus ex vitae tristique. Donec interdum massa ac orci bibendum, vel consectetur dui facilisis. Curabitur cursus malesuada arcu. Nulla facilisi. Pellentesque finibus nulla eros, eu egestas ex porttitor id. In placerat porta cursus. Vestibulum fringilla id justo quis gravida. Duis libero risus, fringilla in augue eu, gravida consequat eros.";
 
 export const CurrentDrinkPage: React.FC = () => {
+  const [values] = useState(Array.from({length: 5}, () => Math.ceil(Math.random() * 100)));
+  const [hit] = useState(Math.random() > 0.5)
+
   const { currentDrinkFull, currentDrink, loading } = useAppSelector(state => state.currentDrink);
   const sessionId = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
@@ -37,27 +41,65 @@ export const CurrentDrinkPage: React.FC = () => {
       dispatch(unsetFavoriteAsync({ sessionId, productId: currentDrinkFull.id }));
   }
 
+  const attributeOrder = Object.keys(attributeDictionary);
+  const sortAttributes = _.sortBy(currentDrinkFull?.attribute, ({ iconType: a }) => attributeOrder.indexOf(a));
+
+  const attribute = (item: Attribute) => {
+    let icon: ImageURISource = IconsResources.icon_coffe;
+    switch (item.iconType) {
+      case "milk":
+        icon = IconsResources.icon_milk;
+        break;
+      case "coffe":
+        icon = IconsResources.icon_coffe;
+        break;
+      case "water":
+        icon = IconsResources.icon_water;
+        break;
+      case "temperature":
+        icon = IconsResources.icon_temperature;
+        break;
+      case "pressure":
+        icon = IconsResources.icon_pressure;
+        break;
+    }
+    return (
+      <View style={styles.icons} key={item.id}>
+        <Image style={styles.attributeIcon} source={icon} />
+        <Text style={styles.attributeText}>
+          {values[attributeOrder.indexOf(item.iconType)]}
+          {_.get(attributeDictionary, item.iconType)}
+        </Text>
+      </View>
+    )
+  };
+
   return (
-    <View style={CommonStyles.flex1}>
+    <View style={CommonStyles.flexWhiteBackground}>
       <LoadingView style={CommonStyles.flex1} isLoading={loading} />
       {!loading ?
         <View style={CommonStyles.flex1}>
           <View style={styles.topContainer}>
-            <ScrollView style={styles.scroll}>
-              <Image
-                source={{ uri: currentDrinkFull?.imagesPath }}
-                defaultSource={ImageResources.image_no_coffe}
-                style={imageStyle}
-                resizeMode={"cover"}
-              />
-              <View style={styles.titleRow}>
-                <Text style={styles.title}>{currentDrinkFull?.productName}</Text>
-                <LikeButton liked={currentDrinkFull != null && currentDrinkFull.favarite} onPress={setFavorite} />
+            <ScrollView>
+              {hit ? <ImageBackground source={ImageResources.image_hit} style={styles.hitBox} resizeMode={"contain"}>
+                <Text style={styles.hitText}>{localization.cafe.hit}</Text>
+              </ImageBackground> : null}
+              <View style={styles.scroll}>
+                <Image
+                  source={{ uri: currentDrinkFull?.imagesPath }}
+                  defaultSource={ImageResources.image_no_coffe}
+                  style={imageStyle}
+                  resizeMode={"cover"}
+                />
+                <View style={styles.titleRow}>
+                  <Text style={styles.title}>{currentDrinkFull?.productName}</Text>
+                  <LikeButton liked={currentDrinkFull != null && currentDrinkFull.favarite} onPress={setFavorite} />
+                </View>
+                <View style={styles.attributesRow}>
+                  {sortAttributes.map(attribute)}
+                </View>
+                <Text style={styles.description}>{description}</Text>
               </View>
-              <View style={styles.attributesRow}>
-                {currentDrinkFull?.attribute.map(attribute)}
-              </View>
-              <Text style={styles.description}>{description}</Text>
             </ScrollView>
           </View>
           <View style={styles.bottomContainer}>
@@ -72,46 +114,27 @@ export const CurrentDrinkPage: React.FC = () => {
   )
 };
 
-const attribute = (item: Attribute) => {
-  let icon: ImageURISource = IconsResources.icon_coffe;
-  switch (item.iconType) {
-    case "milk":
-      icon = IconsResources.icon_milk;
-      break;
-    case "coffe":
-      icon = IconsResources.icon_coffe;
-      break;
-    case "water":
-      icon = IconsResources.icon_water;
-      break;
-    case "temperature":
-      icon = IconsResources.icon_temperature;
-      break;
-    case "pressure":
-      icon = IconsResources.icon_pressure;
-      break;
-  }
-  return (
-    <View style={styles.icons} key={item.id}>
-      <Image source={icon} />
-      <Text>{Math.ceil(Math.random() * 100)}</Text>
-    </View>
-  )
-};
+const attributeDictionary = {
+  "milk": localization.units.ml,
+  "coffe": "%",
+  "water": localization.units.ml,
+  "temperature": "°",
+  "pressure": localization.units.bar
+}
 
 const styles = styleSheetCreate({
   topContainer: {
-    flex: 8,
+    flex: 1,
   } as ViewStyle,
   bottomContainer: {
-    flex: 1,
     flexDirection: "row",
     marginHorizontal: 20,
-    borderTopColor: Colors.black,
+    borderTopColor: Colors.grayEA,
     borderTopWidth: 1
   } as ViewStyle,
   scroll: {
-    paddingHorizontal: 20
+    flex: 1,
+    paddingHorizontal: 24
   } as ViewStyle,
   image: {
     flex: 1,
@@ -122,7 +145,7 @@ const styles = styleSheetCreate({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 20
+    marginTop: 35
   } as ViewStyle,
   title: {
     fontFamily: Fonts.lobster,
@@ -132,18 +155,29 @@ const styles = styleSheetCreate({
   attributesRow: {
     flex: 1,
     flexDirection: "row",
-    marginVertical: 16
+    marginTop: 16,
+    paddingHorizontal: 4
   } as ViewStyle,
+  attributeIcon: {
+    marginBottom: 5
+  } as ImageStyle,
+  attributeText: {
+    fontFamily: Fonts.light,
+    fontSize: 8,
+    color: Colors.gray47
+  } as TextStyle,
   icons: {
     marginRight: 16,
     alignItems: "center"
   } as ImageStyle,
   description: {
     fontFamily: Fonts.light,
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 30,
+    marginBottom: 24
   } as TextStyle,
   priceBox: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center"
@@ -154,9 +188,9 @@ const styles = styleSheetCreate({
   } as TextStyle,
   button: {
     backgroundColor: Colors.normal,
-    flex: 5,
+    flex: 4,
     marginVertical: 10,
-    paddingVertical: 0
+    paddingVertical: 8
   } as ViewStyle,
   buttonText: {
     color: Colors.white,
@@ -165,5 +199,17 @@ const styles = styleSheetCreate({
   likeIcon: {
     width: 30,
     height: 30
-  } as ImageStyle
+  } as ImageStyle,
+  hitBox: {
+    position: "absolute",
+    paddingLeft: 14,
+    paddingRight: 33,
+    paddingVertical: 10,
+    alignItems: "center",
+    zIndex: 1
+  } as ViewStyle,
+  hitText: {
+    fontSize: 14,
+    color: Colors.white
+  } as TextStyle
 });
