@@ -30,6 +30,9 @@ export class SplashResources {
 }
 export class ImageResources {
     static readonly image_back: ImageURISource = require("../../resources/images/image_back.png");
+    static readonly user_border: ImageURISource = require("../../resources/images/user_border.png");
+    static readonly user_white: ImageURISource = require("../../resources/images/user_white.png");
+    static readonly user: ImageURISource = require("../../resources/images/user.png");
     static readonly image_no_coffe: ImageURISource = require("../../resources/images/image_no_coffe.png");
 }
 

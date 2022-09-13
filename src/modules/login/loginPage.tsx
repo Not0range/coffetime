@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, ImageBackground, Keyboard, TextInput, TouchableWithoutFeedback, View, ViewStyle } from "react-native";
+import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, TextInput, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
 import { LoadingModal } from "../../common/components/LoadingModal";
 import { Logo } from "../../common/components/Logo";
@@ -15,6 +15,7 @@ import { Colors, CommonStyles } from "../../core/theme";
 import { RootStackParamList } from "../../navigation/RootNavigation";
 import { IAuthParams, loginAsync, resetError } from "./loginSlice";
 import DevMenu from "react-native-dev-menu";
+import Toast from "react-native-simple-toast";
 
 type Props = StackScreenProps<RootStackParamList, "Login">;
 
@@ -54,7 +55,7 @@ export const LoginPage: React.FC<Props> = (props) => {
       if (result.meta.requestStatus == "fulfilled")
         props.navigation.dispatch(goToMainPage);
       else
-        Alert.alert(localization.errors.error, (result.payload as IAuthParams).error);
+        Toast.show((result.payload as IAuthParams).error);
     });
   };
 
@@ -67,8 +68,15 @@ export const LoginPage: React.FC<Props> = (props) => {
     loginPromise.abort();
   };
 
+  const { width, height } = useWindowDimensions();
+
+  const scrollStyle: ViewStyle = {
+    height,
+    width
+  };
+
   return (
-    <View style={CommonStyles.flex1}>
+    <ScrollView contentContainerStyle={scrollStyle}>
       <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
@@ -77,7 +85,7 @@ export const LoginPage: React.FC<Props> = (props) => {
             <View style={styles.separatorContainer}>
               <Logo />
             </View>
-            <View style={styles.loginContainer}>
+            <KeyboardAvoidingView style={styles.loginContainer}>
               <AuthTextInput
                 label={localization.login.email}
                 containerStyle={styles.input}
@@ -119,11 +127,11 @@ export const LoginPage: React.FC<Props> = (props) => {
                 style={styles.button}
                 onPress={registration}
               />
-            </View>
+            </KeyboardAvoidingView>
           </View>
         </TouchableWithoutFeedback>
       </ImageBackground>
-    </View>
+    </ScrollView>
   )
 }
 
@@ -141,6 +149,7 @@ const styles = styleSheetCreate({
     flex: 1,
     justifyContent: "center",
     alignContent: "center",
+    overflow: "scroll"
   } as ViewStyle,
   separatorContainer: {
     flex: 1,

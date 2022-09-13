@@ -6,7 +6,8 @@ export const loginLocalization = {
         "logout": "Logout",
         "signUp": "Sign Up",
         "email": "E-mail",
-        "password": "Password"
+        "password": "Password",
+        "name": "Name"
     },
     "ru": {
         "continue": "Далее",
@@ -15,6 +16,7 @@ export const loginLocalization = {
         "logout": "Выйти",
         "signUp": "Зарегистрироваться",
         "email": "Эл. почта",
-        "password": "Пароль"
+        "password": "Пароль",
+        "name": "Имя"
     },
 };
