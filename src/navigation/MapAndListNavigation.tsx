@@ -7,12 +7,11 @@ import { Alert, AlertButton, BackHandler, Image, ImageStyle, TouchableOpacity, V
 import { IconsResources, ImageResources } from "../common/ImageResources.g";
 import { localization } from "../common/localization/localization";
 import { styleSheetCreate } from "../common/utils";
-import { useAppDispatch, useAppSelector } from "../core/store/hooks";
+import { useAppDispatch } from "../core/store/hooks";
 import { CommonStyles } from "../core/theme";
 import { shopsHeader, tabOnTopStyle } from "../core/theme/navigation";
 import { heart_icon } from "../core/theme/themeDependencies";
 import { CoffeeShopsList } from "../modules/cafes/cafeList";
-import { getAllCafeAsync } from "../modules/cafes/cafeSlice";
 import { logout } from "../core/store/systemSlice";
 import { Map } from "../modules/map/map"
 import { MainStackParamList } from "./MainNavigation";
@@ -86,7 +85,7 @@ const styles = styleSheetCreate({
   } as ImageStyle,
   button: {
     margin: 8
-  } as ViewStyle
+  } as ViewStyle,
 });
 
 const goToLoginPage = (state: StackNavigationState<RootStackParamList>): CommonActions.Action => {

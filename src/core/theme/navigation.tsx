@@ -23,29 +23,8 @@ export const headerOptions: StackNavigationOptions = {
 
 interface HeaderStyle {
   position: "absolute" | "relative";
-  zIndex: 0
+  zIndex: 0;
 }
-
-const goToLoginPage = (state: StackNavigationState<RootStackParamList>): CommonActions.Action => {
-  const routes = [{ name: "Login" }];
-
-  return CommonActions.reset({
-    ...state,
-    routes,
-    index: 0
-  })
-}
-
-const drawerStyles = styleSheetCreate({
-  container: {
-    flex: 1,
-    padding: 12
-  } as ViewStyle,
-  button: {
-    padding: 12,
-    borderRadius: 10
-  } as ViewStyle
-})
 
 export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBarProps): React.ReactNode => {
   const [style, setStyle] = useState<HeaderStyle>({
@@ -65,7 +44,6 @@ export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBa
   }, [state.index]);
   return (
     <View style={[tabStyles.container, style]}>
-      <View style={CommonStyles.flex1} />
       <View style={tabStyles.tabContainer}>
         <View style={tabStyles.tabView}>
           {state.routes.map((route, index) => {
@@ -78,7 +56,7 @@ export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBa
               if (!isFocused) {
                 navigation.navigate({ name: route.name, params: {}, merge: true });
               }
-            }
+            };
 
             return (
               <TouchableOpacity
@@ -92,7 +70,6 @@ export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBa
           })}
         </View>
       </View>
-      <View style={CommonStyles.flex1} />
     </View>
   )
 }
@@ -106,7 +83,9 @@ const tabStyles = styleSheetCreate({
   container: {
     flexDirection: "row",
     marginTop: 8,
-    marginBottom: 16
+    marginBottom: 16,
+    justifyContent: "center",
+    alignSelf: "center"
   } as ViewStyle,
   tabContainer: {
     borderColor: "black",
@@ -116,10 +95,13 @@ const tabStyles = styleSheetCreate({
   tabView: {
     flexDirection: "row",
     alignContent: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    paddingHorizontal: 3,
+    paddingVertical: 3
   } as ViewStyle,
   tabButton: {
     borderRadius: 30,
-    paddingHorizontal: 16
+    paddingHorizontal: 12,
+    paddingVertical: 4
   } as ViewStyle
 })
