@@ -14,13 +14,14 @@ interface IProps {
 }
 
 export const CafeItem: React.FC<IProps> = (props) => {
+  const address = props.address.slice(0, props.address.indexOf(","));
   return (
     <View style={styleSheetFlatten(styles.container, CommonStyles.shadow)}>
       <Image source={props.image} style={styles.image} defaultSource={ImageResources.image_no_coffe} />
       <View style={styles.description}>
         <Text style={styles.title}>{props.title}</Text>
         <Text style={styles.place}>{localization.cafe.located}</Text>
-        <Text style={styles.address}>{props.address}</Text>
+        <Text style={styles.address}>{address}</Text>
         <TouchableOpacity style={styles.button} onPress={props.onPress}>
           <Text style={styles.more}>{localization.cafe.more}</Text>
           <Image source={IconsResources.icon_read_more} />
@@ -37,8 +38,11 @@ const styles = styleSheetCreate({
     backgroundColor: Colors.white
   } as ViewStyle,
   description: {
-    flex: 4,
-    padding: 12
+    flex: 5,
+    paddingTop: 14,
+    paddingLeft: 14,
+    paddingBottom: 6,
+    paddingRight: 6
   } as ViewStyle,
   image: {
     flex: 3,
@@ -53,15 +57,19 @@ const styles = styleSheetCreate({
   place: {
     fontSize: 14,
     marginBottom: 4,
-    fontFamily: Fonts.light
+    fontFamily: Fonts.light,
+    color: Colors.gray71
   } as TextStyle,
   address: {
     fontSize: 16,
-    marginBottom: 10
+    marginBottom: 10,
+    color: Colors.gray71,
+    includeFontPadding: false
   } as TextStyle,
   more: {
     fontSize: 14,
-    fontFamily: Fonts.light
+    fontFamily: Fonts.light,
+    color: Colors.grayB
   } as TextStyle,
   button: {
     flexDirection: "row",
