@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { Alert, BackHandler, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
@@ -35,6 +35,16 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   const { loading, errorSource } = useAppSelector(state => state.login);
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    return BackHandler.addEventListener("hardwareBackPress", () => {
+      if (animatedValue.value == 1) {
+        animatedValue.value = withTiming(0);
+        return true;
+      }
+      return false;
+    }).remove
+  }, []);
+
   const onInputForPasswordSubmit = (): void => {
     passwordRef.current?.focus();
   };
@@ -63,8 +73,10 @@ export const RegistrationPage: React.FC<Props> = (props) => {
         .then(result => {
           if (result.meta.requestStatus == "fulfilled")
             props.navigation.dispatch(goToMainPage);
-          else
+          else {
             Toast.show((result.payload as IAuthParams).error);
+            animatedValue.value = withTiming(0);
+          }
         });
     }
     else
