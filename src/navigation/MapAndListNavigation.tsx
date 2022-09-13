@@ -9,7 +9,7 @@ import { localization } from "../common/localization/localization";
 import { styleSheetCreate } from "../common/utils";
 import { useAppDispatch } from "../core/store/hooks";
 import { CommonStyles } from "../core/theme";
-import { shopsHeader, tabOnTopStyle } from "../core/theme/navigation";
+import { shopsHeader, tabCommonStyle, tabOnTopStyle } from "../core/theme/navigation";
 import { heart_icon } from "../core/theme/themeDependencies";
 import { CoffeeShopsList } from "../modules/cafes/cafeList";
 import { logout } from "../core/store/systemSlice";
@@ -71,7 +71,7 @@ export const MapAndList: React.FC<Props> = (props) => {
         <Tabs.Screen
           name="ShopsList"
           component={CoffeeShopsList}
-          options={{ tabBarIcon: listIcon, lazy: false }}
+          options={{ tabBarIcon: listIcon, lazy: false, tabBarStyle: tabCommonStyle }}
         />
       </Tabs.Navigator>
     </View>

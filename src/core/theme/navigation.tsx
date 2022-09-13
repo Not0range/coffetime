@@ -2,7 +2,7 @@ import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
 import { CommonActions, StackNavigationState } from "@react-navigation/native"
 import { StackNavigationOptions } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Image, StyleProp, TouchableOpacity, View, ViewStyle } from "react-native"
 import { ImageResources } from "../../common/ImageResources.g"
 import { styleSheetCreate } from "../../common/utils"
 import { RootStackParamList } from "../../navigation/RootNavigation"
@@ -21,26 +21,15 @@ export const headerOptions: StackNavigationOptions = {
   headerBackImage: () => <Image source={ImageResources.image_back} />
 }
 
-interface HeaderStyle {
-  position: "absolute" | "relative";
-  zIndex: 0;
-}
-
 export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBarProps): React.ReactNode => {
-  const [style, setStyle] = useState<HeaderStyle>({
-    position: "relative",
-    zIndex: 0
-  });
+  const [style, setStyle] = useState<ViewStyle>({});
 
   useEffect(() => {
     const s = descriptors[state.routes[state.index].key].options?.tabBarStyle;
     if (s)
-      setStyle(s as HeaderStyle);
+      setStyle((s as ViewStyle));
     else
-      setStyle({
-        position: "relative",
-        zIndex: 0
-      });
+      setStyle({})
   }, [state.index]);
   return (
     <View style={[tabStyles.container, style]}>
@@ -76,16 +65,21 @@ export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBa
 
 export const tabOnTopStyle = {
   position: "absolute",
-  zIndex: 2
-} as ViewStyle
+  zIndex: 2,
+} as ViewStyle;
+
+export const tabCommonStyle = {
+  backgroundColor: Colors.white,
+  width: "100%"
+} as ViewStyle;
 
 const tabStyles = styleSheetCreate({
   container: {
     flexDirection: "row",
-    marginTop: 8,
-    marginBottom: 16,
+    paddingTop: 8,
+    paddingBottom: 12,
     justifyContent: "center",
-    alignSelf: "center"
+    alignSelf: "center",
   } as ViewStyle,
   tabContainer: {
     borderColor: "black",

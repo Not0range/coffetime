@@ -100,7 +100,7 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
     !loading && drinks.length > 0 ? LoadState.idle : LoadState.error;
 
   return (
-    <View style={CommonStyles.flex1}>
+    <View style={CommonStyles.flexWhiteBackground}>
       <GridWrapper
         ListHeaderComponent={<View children={cafeHeader({})} />}
         data={drinks}
@@ -110,7 +110,8 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
         loadState={loadState}
         tryAgain={loadData}
         EmptyComponent={() => null}
-        style={styles.container}
+        style={CommonStyles.flex1}
+        contentContainerStyle={styles.grid}
       />
     </View>
   )
@@ -121,13 +122,8 @@ function keyExtractor(items: Product[]): string {
 }
 
 const styles = styleSheetCreate({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.gray
-  } as ViewStyle,
   grid: {
-    flex: 1,
-    backgroundColor: Colors.gray
+    paddingHorizontal: 4
   } as ViewStyle,
   row: {
     flexDirection: "row",
@@ -143,7 +139,7 @@ const styles = styleSheetCreate({
     margin: 4
   } as ViewStyle,
   cafeImage: {
-    marginBottom: 8,
+    marginBottom: 4,
     alignContent: "flex-end"
   } as ViewStyle,
   title: {

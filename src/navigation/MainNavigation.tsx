@@ -23,7 +23,7 @@ const Stack = createStackNavigator<MainStackParamList>();
 
 export const MainPage: React.FC<Props> = (props: Props) => {
   return (
-    <View style={CommonStyles.flex1}>
+    <View style={CommonStyles.flexWhiteBackground}>
       <Stack.Navigator screenOptions={headerOptions}>
         <Stack.Screen name={"MapAndList"} component={MapAndList} options={{ title: localization.pages.coffeeShops }} />
         <Stack.Screen name={"FavoriteDrinks"} component={FavoriteDrinksPage} options={{ title: localization.pages.favoritesDrinks }} />
