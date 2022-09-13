@@ -1,6 +1,6 @@
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useState } from "react";
-import { Alert, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
+import { Image, ImageStyle, Linking, Platform, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
 import { CommonStyles, Fonts } from "../../core/theme";
 import { ShopsStackParamList } from "../../navigation/MapAndListNavigation";
@@ -8,7 +8,9 @@ import MapboxGL from "@rnmapbox/maps";
 import Geolocation from '@react-native-community/geolocation';
 import { styleSheetCreate } from "../../common/utils";
 import { PointAnnotation } from "./components/PointAnnotation";
-import calculateDistance from "@turf/distance"
+import * as turf from "@turf/helpers";
+import calculateDistance from "@turf/distance";
+import center from "@turf/center";
 import { appSettingsProvider } from "../../core/settings";
 import { localization } from "../../common/localization/localization";
 import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
@@ -16,12 +18,14 @@ import { Cafe } from "../../core/api/generated/dto/Cafe.g";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import _ from "lodash";
 import { getAllCafeAsync } from "../cafes/cafeSlice";
+import { setCurrentCafe } from "../currentCafe/currentCafeSlice";
+import Toast from "react-native-simple-toast";
 
 MapboxGL.setWellKnownTileServer("Mapbox")
 MapboxGL.setAccessToken(appSettingsProvider.settings.mapboxApiKey);
 MapboxGL.setConnected(true);
 
-const zoomFactor = 5.25;
+const zoomFactor = 5;
 
 type Props = MaterialTopTabScreenProps<ShopsStackParamList, "Map">;
 
@@ -64,17 +68,33 @@ export const Map: React.FC<Props> = (props) => {
     setSelected("");
   };
 
+  const cafePress = () => {
+    const cafe = cafes.find(t => t.id == selected);
+    if (!cafe) return;
+    dispatch(setCurrentCafe(cafe));
+    props.navigation.getParent()?.navigate("CurrentCafe");
+  };
+
+  const distansePress = () => {
+    const cafe = cafes.find(t => t.id == selected);
+    if (!cafe) return;
+    const coords = stringToCoordinates(cafe.coordinates);
+
+    const scheme = Platform.select({ ios: 'maps:', android: 'geo:' });
+    const url = `${scheme}${coords[1]},${coords[0]}`;
+    Linking.openURL(url);
+  }
+
   useEffect(() => {
     if (sessionId)
       dispatch(getAllCafeAsync(sessionId)).then(result => {
         if (result.meta.requestStatus != "fulfilled") return;
 
         const coords = cafes.map(t => stringToCoordinates(t.coordinates));
-        const avgLong = _.sumBy(coords, t => t[0]) / coords.length;
-        const avgLat = _.sumBy(coords, t => t[1]) / coords.length;
-        setCameraCoords([avgLong, avgLat]);
+        const {geometry} = center(turf.points(coords));
+        setCameraCoords(geometry.coordinates);
 
-        const zoom = _.max(coords.map(t => calculateDistance(cameraCoords, t, {units: "degrees"}))) || 0;
+        const zoom = _.max(coords.map(t => calculateDistance(cameraCoords, t, { units: "degrees" }))) || 0;
         setZoom(zoom / zoomFactor);
       });
   }, []);
@@ -87,7 +107,7 @@ export const Map: React.FC<Props> = (props) => {
       if (error.code == 1)
         Geolocation.requestAuthorization();
       else if (error.code == 2)
-        Alert.alert(localization.errors.error, localization.errors.geolocationError);
+        Toast.show(localization.errors.geolocationError);
 
       timerId = setInterval(() => {
         Geolocation.getCurrentPosition(pos => {
@@ -157,8 +177,13 @@ export const Map: React.FC<Props> = (props) => {
           </TouchableOpacity>
         </View>
         <View style={styles.bottomContainer} onLayout={layoutHandler}>
-          <Text style={styles.title}>{selectedCafe?.name}</Text>
-          <Text>{locatingVisible ? `${distance} ${"м"} = ${time} ${"минут"}` : null}</Text>
+          <TouchableOpacity onPress={cafePress}>
+            <Text style={styles.title}>{selectedCafe?.name}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={distansePress}>
+            <Text>{locatingVisible ? `${distance} ${"м"} = ${time} ${"минут"}` : null}</Text>
+          </TouchableOpacity>
         </View>
       </Animated.View>
     </View>
