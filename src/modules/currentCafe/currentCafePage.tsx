@@ -143,6 +143,7 @@ const styles = styleSheetCreate({
     margin: 4
   } as ViewStyle,
   cafeImage: {
+    marginBottom: 8,
     alignContent: "flex-end"
   } as ViewStyle,
   title: {
@@ -165,7 +166,6 @@ const styles = styleSheetCreate({
   } as ViewStyle,
   gradient: {
     flex: 1,
-    marginBottom: 8,
     paddingBottom: 8
   } as ViewStyle
 });

@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, BackHandler, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { BackHandler, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
