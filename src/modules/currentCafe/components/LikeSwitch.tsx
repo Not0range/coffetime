@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { ViewStyle, TouchableWithoutFeedback, TouchableWithoutFeedbackProps, View } from "react-native"
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { IconsResources } from "../../../common/ImageResources.g";

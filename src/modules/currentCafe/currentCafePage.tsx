@@ -1,7 +1,7 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import { ImageBackground, ImageStyle, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
+import { ImageBackground, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { GridWrapper } from "../../common/components/GridWrapper";
 import { ImageResources } from "../../common/ImageResources.g";

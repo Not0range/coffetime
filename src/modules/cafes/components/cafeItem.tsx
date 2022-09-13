@@ -1,5 +1,5 @@
 import React from "react";
-import { ViewStyle, ImageStyle, TextStyle, ImageSourcePropType, Image, Text, TouchableOpacity, View, ImageURISource } from "react-native";
+import { ViewStyle, ImageStyle, TextStyle, ImageSourcePropType, Image, Text, TouchableOpacity, View } from "react-native";
 import { IconsResources, ImageResources } from "../../../common/ImageResources.g";
 import { localization } from "../../../common/localization/localization";
 import { styleSheetCreate, styleSheetFlatten } from "../../../common/utils";

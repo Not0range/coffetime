@@ -1,6 +1,5 @@
-import { AnyMap } from "immer/dist/internal";
 import React, { useEffect } from "react";
-import { Animated, Image, ImageStyle, ImageURISource, ScrollView, Text, TextStyle, TouchableOpacity, useWindowDimensions, View, ViewStyle } from "react-native";
+import { Image, ImageStyle, ImageURISource, ScrollView, Text, TextStyle, useWindowDimensions, View, ViewStyle } from "react-native";
 import { LoadingView } from "../../common/components/LoadingView";
 import { MainButton } from "../../common/components/MainButton";
 import { ButtonType } from "../../common/enums/buttonType";

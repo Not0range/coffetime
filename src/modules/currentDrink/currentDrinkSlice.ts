@@ -5,8 +5,6 @@ import { requestsRepository } from "../../core/api/requestsRepository";
 import { CoreActions } from "../../core/store";
 import Toast from "react-native-simple-toast";
 import { localization } from "../../common/localization/localization";
-import { IAppState } from "../../core/store/AppState";
-import { newState } from "../../common/newState";
 import { setFavoriteAsync, unsetFavoriteAsync } from "../favoritesDrinks/favoriteDrinksSlice";
 import { Product } from "../../core/api/generated/dto/Product.g";
 

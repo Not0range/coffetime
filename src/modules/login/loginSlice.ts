@@ -1,12 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import _, { keys } from "lodash";
+import _ from "lodash";
 import { AuthHelper } from "../../common/helpers/authHelper";
 import { localization } from "../../common/localization/localization";
 import { SignInRequestDto } from "../../core/api/generated/dto/SignInRequest.g";
 import { requestsRepository } from "../../core/api/requestsRepository";
 import { ExceptionType, NoAuthError } from "../../core/exceptionTypes";
 import { CoreActions } from "../../core/store";
-import Toast from "react-native-simple-toast";
 
 export interface IAuthParams extends SignInRequestDto {
   error: string;

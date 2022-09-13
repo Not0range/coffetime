@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { localization } from "../../common/localization/localization";
-import { newState } from "../../common/newState";
 import { Product } from "../../core/api/generated/dto/Product.g";
 import { requestsRepository } from "../../core/api/requestsRepository";
-import { actionCreator, CoreActions } from "../../core/store";
-import { IAppState } from "../../core/store/AppState";
+import { CoreActions } from "../../core/store";
 import Toast from "react-native-simple-toast";
 import { ProductRequest } from "../../core/api/generated/dto/ProductRequest.g";
 

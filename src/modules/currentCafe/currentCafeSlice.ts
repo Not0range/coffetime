@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { newState } from "../../common/newState";
 import { Cafe } from "../../core/api/generated/dto/Cafe.g";
 import { CafeRequest } from "../../core/api/generated/dto/CafeRequest.g";
 import { Product } from "../../core/api/generated/dto/Product.g";

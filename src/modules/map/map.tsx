@@ -1,5 +1,5 @@
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Image, ImageStyle, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
 import { CommonStyles, Fonts } from "../../core/theme";
