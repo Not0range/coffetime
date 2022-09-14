@@ -183,6 +183,7 @@ const styles = styleSheetCreate({
   description: {
     fontFamily: Fonts.light,
     fontSize: 16,
+    color: Colors.gray47,
     marginTop: 30,
     marginBottom: 24
   } as TextStyle,
@@ -194,6 +195,7 @@ const styles = styleSheetCreate({
   } as ViewStyle,
   priceText: {
     fontSize: 28,
+    color: Colors.gray71,
     marginHorizontal: 10
   } as TextStyle,
   rubIcon: {
