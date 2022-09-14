@@ -46,7 +46,7 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
   const cafeHeader: React.FC = () => {
     return (
       <ImageBackground source={{ uri: currentCafe?.images }} defaultSource={ImageResources.image_no_coffe} style={imageStyle}>
-        <LinearGradient start={{x: 0, y: 0.52}} end={{x: 0, y: 1}} colors={["#FFFFFF00", "#F7ECDAFF"]} style={styles.gradient}>
+        <LinearGradient start={{x: 0, y: 0.52}} end={{x: 0, y: 1}} colors={[Colors.transparent, Colors.cafeGradient]} style={styles.gradient}>
           <View style={CommonStyles.flex1} />
           <View style={styles.imageBottom}>
             <View style={CommonStyles.flex1}>

@@ -16,6 +16,7 @@ import { RootStackParamList } from "../../navigation/RootNavigation";
 import { IAuthParams, loginAsync, resetError } from "./loginSlice";
 import DevMenu from "react-native-dev-menu";
 import Toast from "react-native-simple-toast";
+import LinearGradient from "react-native-linear-gradient";
 
 type Props = StackScreenProps<RootStackParamList, "Login">;
 
@@ -80,56 +81,58 @@ export const LoginPage: React.FC<Props> = (props) => {
       <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View style={CommonStyles.flex1}>
-            <View style={styles.separatorContainer}>
-              <Logo />
+        <LinearGradient start={{x: 0, y: 0.88}} end={{x: 0, y: 1}} colors={[Colors.transparent, Colors.loginGradient]} style={CommonStyles.flex1}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={CommonStyles.flex1}>
+              <View style={styles.separatorContainer}>
+                <Logo />
+              </View>
+              <KeyboardAvoidingView style={styles.loginContainer}>
+                <AuthTextInput
+                  label={localization.login.email}
+                  containerStyle={styles.input}
+                  keyboardType={"email-address"}
+                  value={email}
+                  onChangeText={setEmail}
+                  enablesReturnKeyAutomatically={true}
+                  returnKeyType={"next"}
+                  onSubmitEditing={onInputForPasswordSubmit}
+                  blurOnSubmit={false}
+                  isError={errorSource == "email" || errorSource == "both"}
+                />
+                <AuthTextInput
+                  inputRef={passwordRef}
+                  label={localization.login.password}
+                  containerStyle={styles.input}
+                  keyboardType={"default"}
+                  value={password}
+                  spellCheck={false}
+                  onChangeText={setPassword}
+                  enablesReturnKeyAutomatically={true}
+                  returnKeyType={"done"}
+                  onSubmitEditing={login}
+                  blurOnSubmit={false}
+                  secureTextEntry={isSecureEnabled}
+                  icon={isSecureEnabled ? IconsResources.icon_eye : IconsResources.icon_eye_non}
+                  onIconPress={passwordIconPress}
+                  isError={errorSource == "password" || errorSource == "both"}
+                />
+                <MainButton
+                  type={ButtonType.Action}
+                  title={localization.login.login}
+                  style={styles.button}
+                  onPress={login}
+                />
+                <MainButton
+                  type={ButtonType.Action}
+                  title={localization.login.registration}
+                  style={styles.button}
+                  onPress={registration}
+                />
+              </KeyboardAvoidingView>
             </View>
-            <KeyboardAvoidingView style={styles.loginContainer}>
-              <AuthTextInput
-                label={localization.login.email}
-                containerStyle={styles.input}
-                keyboardType={"email-address"}
-                value={email}
-                onChangeText={setEmail}
-                enablesReturnKeyAutomatically={true}
-                returnKeyType={"next"}
-                onSubmitEditing={onInputForPasswordSubmit}
-                blurOnSubmit={false}
-                isError={errorSource == "email" || errorSource == "both"}
-              />
-              <AuthTextInput
-                inputRef={passwordRef}
-                label={localization.login.password}
-                containerStyle={styles.input}
-                keyboardType={"default"}
-                value={password}
-                spellCheck={false}
-                onChangeText={setPassword}
-                enablesReturnKeyAutomatically={true}
-                returnKeyType={"done"}
-                onSubmitEditing={login}
-                blurOnSubmit={false}
-                secureTextEntry={isSecureEnabled}
-                icon={isSecureEnabled ? IconsResources.icon_eye : IconsResources.icon_eye_non}
-                onIconPress={passwordIconPress}
-                isError={errorSource == "password" || errorSource == "both"}
-              />
-              <MainButton
-                type={ButtonType.Action}
-                title={localization.login.login}
-                style={styles.button}
-                onPress={login}
-              />
-              <MainButton
-                type={ButtonType.Action}
-                title={localization.login.registration}
-                style={styles.button}
-                onPress={registration}
-              />
-            </KeyboardAvoidingView>
-          </View>
-        </TouchableWithoutFeedback>
+          </TouchableWithoutFeedback>
+        </LinearGradient>
       </ImageBackground>
     </ScrollView>
   )
