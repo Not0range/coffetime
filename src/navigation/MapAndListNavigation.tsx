@@ -7,10 +7,10 @@ import { Alert, AlertButton, BackHandler, Image, ImageStyle, TouchableOpacity, V
 import { IconsResources, ImageResources } from "../common/ImageResources.g";
 import { localization } from "../common/localization/localization";
 import { styleSheetCreate } from "../common/utils";
-import { useAppDispatch } from "../core/store/hooks";
+import { useAppDispatch, useAppSelector } from "../core/store/hooks";
 import { CommonStyles } from "../core/theme";
 import { shopsHeader, tabCommonStyle, tabOnTopStyle } from "../core/theme/navigation";
-import { heart_icon } from "../core/theme/themeDependencies";
+import { cart_icon, heart_icon } from "../core/theme/themeDependencies";
 import { CoffeeShopsList } from "../modules/cafes/cafeList";
 import { logout } from "../core/store/systemSlice";
 import { Map } from "../modules/map/map"
@@ -27,15 +27,23 @@ export type ShopsStackParamList = {
 const Tabs = createMaterialTopTabNavigator<ShopsStackParamList>();
 
 export const MapAndList: React.FC<Props> = (props) => {
+  const order = useAppSelector(state => state.order.orderDrinks.length != 0)
   const dispatch = useAppDispatch();
 
+  const goToOrder = () => props.navigation.navigate("OrderDrinks");
   const goToFavorite = () => props.navigation.navigate("FavoriteDrinks");
+
   const headerRight = () => (
-    <TouchableOpacity onPress={goToFavorite} style={styles.button}>
-      <Image source={heart_icon()} style={styles.icon} />
-    </TouchableOpacity>
+    <View style={styles.buttonsContainer}>
+      {order ? <TouchableOpacity onPress={goToOrder} style={styles.button}>
+        <Image source={cart_icon()} style={styles.icon} />
+      </TouchableOpacity> : null}
+      <TouchableOpacity onPress={goToFavorite} style={styles.button}>
+        <Image source={heart_icon()} style={styles.icon} />
+      </TouchableOpacity>
+    </View>
   );
-  
+
   const logoutPress = () => {
     dispatch(logout());
     (props.navigation.getParent() as StackNavigationProp<RootStackParamList, "MainPage", undefined>).dispatch(goToLoginPage);
@@ -58,7 +66,7 @@ export const MapAndList: React.FC<Props> = (props) => {
   )
   useEffect(() => {
     props.navigation.setOptions({ headerLeft, headerRight });
-  }, []);
+  }, [order]);
 
   return (
     <View style={CommonStyles.flex1}>
@@ -83,6 +91,10 @@ const styles = styleSheetCreate({
     height: 24,
     width: 24
   } as ImageStyle,
+  buttonsContainer: {
+    marginHorizontal: 10,
+    flexDirection: "row"
+  } as ViewStyle,
   button: {
     margin: 8
   } as ViewStyle,

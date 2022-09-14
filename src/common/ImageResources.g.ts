@@ -24,6 +24,12 @@ export class IconsResources {
     static readonly icon_temperature: ImageURISource = require("../../resources/images/icons/icon_temperature.png");
     static readonly icon_swich_pin_active: ImageURISource = require("../../resources/images/icons/icon_swich_pin_active.png");
     static readonly icon_swich_pin: ImageURISource = require("../../resources/images/icons/icon_swich_pin.png");
+    static readonly icon_cart: ImageURISource = require("../../resources/images/icons/icon_cart.png");
+    static readonly icon_cart_black: ImageURISource = require("../../resources/images/icons/icon_cart_black.png");
+    static readonly icon_trash: ImageURISource = require("../../resources/images/icons/icon_trash.png");
+    static readonly icon_trash_black: ImageURISource = require("../../resources/images/icons/icon_trash_black.png");
+    static readonly icon_menu: ImageURISource = require("../../resources/images/icons/icon_menu.png");
+    static readonly icon_menu_black: ImageURISource = require("../../resources/images/icons/icon_menu_black.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");

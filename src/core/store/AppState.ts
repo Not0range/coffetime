@@ -5,6 +5,7 @@ import { CafeInitialState, ICafeState } from "../../modules/cafes/cafeSlice";
 import { CurrentCafeInitialState, ICurrentCafeState } from "../../modules/currentCafe/currentCafeSlice";
 import { CurrentDrinkInitialState, ICurrentDrinkState } from "../../modules/currentDrink/currentDrinkSlice";
 import { FavoriteDrinksInitialState, IFavoriteDrinksState } from "../../modules/favoritesDrinks/favoriteDrinksSlice";
+import { IOrderState, OrderInitialState } from "../../modules/order/orderSlice";
 
 export interface IAppState {
   system: ISystemState;
@@ -14,6 +15,7 @@ export interface IAppState {
   currentCafe: ICurrentCafeState;
   currentDrink: ICurrentDrinkState;
   favoriteDrinks: IFavoriteDrinksState;
+  order: IOrderState;
 }
 
 export function getAppInitialState(): IAppState {
@@ -24,6 +26,7 @@ export function getAppInitialState(): IAppState {
     cafes: CafeInitialState,
     currentCafe: CurrentCafeInitialState,
     currentDrink: CurrentDrinkInitialState,
-    favoriteDrinks: FavoriteDrinksInitialState
+    favoriteDrinks: FavoriteDrinksInitialState,
+    order: OrderInitialState
   };
 }

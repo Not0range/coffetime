@@ -8,6 +8,7 @@ import cafeReducer from "../../modules/cafes/cafeSlice";
 import currentCafeReducer from "../../modules/currentCafe/currentCafeSlice";
 import currentDrinkReducer from "../../modules/currentDrink/currentDrinkSlice";
 import favoriteDrinksReducer from "../../modules/favoritesDrinks/favoriteDrinksSlice";
+import orderReducer from "../../modules/order/orderSlice";
 
 export function createMainReducer(): any {
   const reducers: Reducers<IAppState> = {
@@ -17,7 +18,8 @@ export function createMainReducer(): any {
     cafes: cafeReducer,
     currentCafe: currentCafeReducer,
     currentDrink: currentDrinkReducer,
-    favoriteDrinks: favoriteDrinksReducer
+    favoriteDrinks: favoriteDrinksReducer,
+    order: orderReducer
   };
 
   return combineReducers(reducers);

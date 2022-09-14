@@ -4,13 +4,15 @@ export const pagesLocalization = {
         "coffeeShops": "Coffee Shops",
         "favoritesDrinks": "Favorites Drinks",
         "currentCafe": "Current Cafe",
-        "currentDrink": "Current Drink"
+        "currentDrink": "Current Drink",
+        "orderDrinks": "Order Drinks"
     },
     "ru": {
         "inDevelopment": "В разработке",
         "coffeeShops": "Кофейни",
         "favoritesDrinks": "Избранные напитки",
         "currentCafe": "Выбранная кофейня",
-        "currentDrink": "Выбранный напиток"
+        "currentDrink": "Выбранный напиток",
+        "orderDrinks": "Заказанные напитки"
     },
 };

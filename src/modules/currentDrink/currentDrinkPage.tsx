@@ -13,14 +13,18 @@ import { setFavoriteAsync, unsetFavoriteAsync } from "../favoritesDrinks/favorit
 import { LikeButton } from "../../common/components/LikeButton";
 import { getProductFullAsync } from "./currentDrinkSlice";
 import _ from "lodash";
+import Toast from "react-native-simple-toast";
+import { addToOrder } from "../order/orderSlice";
+import { attributeDictionary } from "../../types/attributes";
 
 const description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc maximus bibendum interdum. Curabitur ornare consectetur purus id tincidunt. Morbi at cursus arcu. Aliquam et metus ligula. Proin vel erat lectus. Phasellus ullamcorper augue lectus. Nam tincidunt cursus ex vitae tristique. Donec interdum massa ac orci bibendum, vel consectetur dui facilisis. Curabitur cursus malesuada arcu. Nulla facilisi. Pellentesque finibus nulla eros, eu egestas ex porttitor id. In placerat porta cursus. Vestibulum fringilla id justo quis gravida. Duis libero risus, fringilla in augue eu, gravida consequat eros.";
 
 export const CurrentDrinkPage: React.FC = () => {
-  const [values] = useState(Array.from({length: 5}, () => Math.ceil(Math.random() * 100)));
+  const [values] = useState(Array.from({ length: 5 }, () => Math.ceil(Math.random() * 100)));
   const [hit] = useState(Math.random() > 0.5)
 
   const { currentDrinkFull, currentDrink, loading } = useAppSelector(state => state.currentDrink);
+  const inOrder = useAppSelector(state => state.order.orderDrinks.some(t => t.drink.id == currentDrink?.id));
   const sessionId = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
 
@@ -40,6 +44,13 @@ export const CurrentDrinkPage: React.FC = () => {
     else
       dispatch(unsetFavoriteAsync({ sessionId, productId: currentDrinkFull.id }));
   }
+
+  const orderPress = () => {
+    if (!currentDrinkFull || !currentDrink) return;
+
+    dispatch(addToOrder({drink: currentDrinkFull, product: currentDrink}));
+    Toast.show(localization.cafe.addedToOrder);
+  };
 
   const attributeOrder = Object.keys(attributeDictionary);
   const sortAttributes = _.sortBy(currentDrinkFull?.attribute, ({ iconType: a }) => attributeOrder.indexOf(a));
@@ -105,22 +116,21 @@ export const CurrentDrinkPage: React.FC = () => {
           <View style={styles.bottomContainer}>
             <View style={styles.priceBox}>
               <Text style={styles.priceText}>{currentDrinkFull?.price}</Text>
-              <Image source={IconsResources.symbol_rub} />
+              <Image style={styles.rubIcon} source={IconsResources.symbol_rub} />
             </View>
-            <MainButton type={ButtonType.Action} style={styles.button} title={localization.cafe.order} titleStyle={styles.buttonText} />
+            <MainButton
+              type={ButtonType.Action}
+              style={styles.button}
+              title={localization.cafe.order}
+              titleStyle={styles.buttonText}
+              onPress={orderPress}
+              disabled={inOrder}
+            />
           </View>
         </View> : null}
     </View>
   )
 };
-
-const attributeDictionary = {
-  "milk": localization.units.ml,
-  "coffe": "%",
-  "water": localization.units.ml,
-  "temperature": "°",
-  "pressure": localization.units.bar
-}
 
 const styles = styleSheetCreate({
   topContainer: {
@@ -186,6 +196,9 @@ const styles = styleSheetCreate({
     fontSize: 28,
     marginHorizontal: 10
   } as TextStyle,
+  rubIcon: {
+    alignSelf: "center"
+  } as ImageStyle,
   button: {
     backgroundColor: Colors.normal,
     flex: 4,

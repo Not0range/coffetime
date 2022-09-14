@@ -12,6 +12,8 @@ export const errorsLocalization = {
         "noInternetConnection": "No server connection. Check your Internet connection",
         "error": "Error: ",
 
+        "notImplemented": "This feature not implemented",
+
         "failedToConnect": "Failed to connect to the server.",
         "checkConnection": "Check your Internet connection and try again later.",
 

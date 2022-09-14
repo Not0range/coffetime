@@ -6,7 +6,8 @@ export const cafeLocalization = {
     "hit": "HIT",
     "order": "ORDER",
     "noCoffe": "There's not a single cup of coffee here",
-    "tryLater": "Try to come back to us later"
+    "tryLater": "Try to come back to us later",
+    "addedToOrder": "Added to order"
   },
   "ru": {
     "located": "мы находимся",
@@ -15,6 +16,7 @@ export const cafeLocalization = {
     "hit": "ХИТ",
     "order": "ЗАКАЗАТЬ",
     "noCoffe": "Здесь нет ни одной чашки кофе",
-    "tryLater": "Попробуйте вернуться к нам позже"
+    "tryLater": "Попробуйте вернуться к нам позже",
+    "addedToOrder": "Добавлено в заказ"
   }
 };
