@@ -81,10 +81,11 @@ export const LoginPage: React.FC<Props> = (props) => {
       <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-        <LinearGradient start={{x: 0, y: 0.88}} end={{x: 0, y: 1}} colors={[Colors.transparent, Colors.loginGradient]} style={CommonStyles.flex1}>
+        <LinearGradient start={{ x: 0, y: 0.88 }} end={{ x: 0, y: 1 }} colors={[Colors.transparent, Colors.loginGradient]} style={CommonStyles.flex1}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={CommonStyles.flex1}>
-              <View style={styles.separatorContainer}>
+              <View style={CommonStyles.flex1} />
+              <View style={styles.logoContainer}>
                 <Logo />
               </View>
               <KeyboardAvoidingView style={styles.loginContainer}>
@@ -154,14 +155,14 @@ const styles = styleSheetCreate({
     alignContent: "center",
     overflow: "scroll"
   } as ViewStyle,
-  separatorContainer: {
+  logoContainer: {
     flex: 1,
     padding: 40,
-    justifyContent: "center",
-    alignContent: "center"
+    justifyContent: "flex-start",
+    alignContent: "flex-end"
   } as ViewStyle,
   loginContainer: {
-    flex: 3,
+    flex: 5,
     padding: 40,
     justifyContent: "center",
     alignContent: "center"
@@ -172,7 +173,8 @@ const styles = styleSheetCreate({
     justifyContent: "center",
     paddingVertical: 15,
     paddingHorizontal: 30,
-    marginTop: 30
+    marginTop: 30,
+    backgroundColor: Colors.normal
   } as ViewStyle,
   input: {
     marginHorizontal: 16,

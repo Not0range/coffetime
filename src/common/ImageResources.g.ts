@@ -30,6 +30,7 @@ export class IconsResources {
     static readonly icon_trash_black: ImageURISource = require("../../resources/images/icons/icon_trash_black.png");
     static readonly icon_menu: ImageURISource = require("../../resources/images/icons/icon_menu.png");
     static readonly icon_menu_black: ImageURISource = require("../../resources/images/icons/icon_menu_black.png");
+    static readonly icon_pencil_edit: ImageURISource = require("../../resources/images/icons/icon_pencil_edit.png");
 }
 export class SplashResources {
     static readonly splash: ImageURISource = require("../../resources/images/splash/splash.png");

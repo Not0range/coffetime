@@ -116,13 +116,14 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   return (
     <ScrollView contentContainerStyle={scrollStyle}>
       <LoadingModal isLoading={loading} />
-      
+
       <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Animated.ScrollView style={mainContainerStyle} horizontal>
             <View style={pageStyle}>
               <View style={CommonStyles.flex1}>
-                <View style={styles.separatorContainer}>
+                <View style={CommonStyles.flex1} />
+                <View style={styles.logoContainer}>
                   <Logo />
                 </View>
                 <View style={styles.loginContainer}>
@@ -172,7 +173,8 @@ export const RegistrationPage: React.FC<Props> = (props) => {
             </View>
             <View style={pageStyle}>
               <View style={CommonStyles.flex1}>
-                <View style={styles.separatorContainer}>
+                <View style={CommonStyles.flex1} />
+                <View style={styles.logoContainer}>
                   <Logo />
                 </View>
                 <View style={styles.imageContainer}>
@@ -191,7 +193,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
                     onSubmitEditing={register}
                     blurOnSubmit={true}
                     autoCapitalize={"words"}
-                    isError={errorSource == "email" || errorSource == "both"}
+                    icon={IconsResources.icon_pencil_edit}
                   />
                 </View>
                 <View style={styles.registrationContainer}>
@@ -232,14 +234,14 @@ const styles = styleSheetCreate({
     justifyContent: "center",
     alignContent: "center",
   } as ViewStyle,
-  separatorContainer: {
+  logoContainer: {
     flex: 1,
     padding: 40,
     justifyContent: "center",
     alignContent: "center"
   } as ViewStyle,
   loginContainer: {
-    flex: 3,
+    flex: 5,
     padding: 40,
     justifyContent: "center",
     alignContent: "center"
@@ -250,7 +252,8 @@ const styles = styleSheetCreate({
     justifyContent: "center",
     paddingVertical: 15,
     paddingHorizontal: 30,
-    marginTop: 30
+    marginTop: 30,
+    backgroundColor: Colors.normal
   } as ViewStyle,
   input: {
     marginHorizontal: 16,
@@ -262,7 +265,7 @@ const styles = styleSheetCreate({
   profileImageBox: {
     flex: 1,
     justifyContent: "center",
-    marginBottom: 80
+    marginBottom: 60
   } as ViewStyle,
   profileImageBorder: {
     alignSelf: "center",
