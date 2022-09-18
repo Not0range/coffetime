@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import { View, ViewStyle } from "react-native";
 import { styleSheetCreate } from "../../common/utils";
 import { ItemLayoutCache, ItemLayoutName } from "./ItemLayoutCache";
 import { ItemLayoutCacheSetter } from "./ItemLayoutCacheSetter";
 
-export const ItemLayoutCacheContainer: React.FC<IProps> = (props: IProps) => {
+export const ItemLayoutCacheContainer: React.FC<IProps> = (props) => {
   return (
     <View style={styles.container}>
       <ItemLayoutCacheSetter item={ItemLayoutName.newsItem} itemLayoutCache={props.itemLayoutCache}>

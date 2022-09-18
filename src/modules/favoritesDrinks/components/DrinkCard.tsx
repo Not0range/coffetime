@@ -16,7 +16,7 @@ interface IProps extends ViewProps {
   size: number;
 }
 
-export const DrinkCard: React.FC<IProps> = (props: IProps) => {
+export const DrinkCard: React.FC<IProps> = (props) => {
   const { liked, onPress, onLikePress, title, type, image, price, size } = props;
   const imageStyle = styleSheetFlatten(styles.image, { width: size });
   return (

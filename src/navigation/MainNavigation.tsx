@@ -23,7 +23,7 @@ export type MainStackParamList = {
 
 const Stack = createStackNavigator<MainStackParamList>();
 
-export const MainPage: React.FC<Props> = (props: Props) => {
+export const MainPage: React.FC<Props> = (props) => {
   return (
     <View style={CommonStyles.flexWhiteBackground}>
       <Stack.Navigator screenOptions={headerOptions}>

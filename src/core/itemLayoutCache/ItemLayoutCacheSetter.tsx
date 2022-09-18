@@ -1,8 +1,8 @@
-import React, { PureComponent, useReducer } from "react";
-import { LayoutChangeEvent, View, ViewProps } from "react-native";
+import React, { useReducer } from "react";
+import { LayoutChangeEvent, View } from "react-native";
 import { ItemLayoutCache, ItemLayoutName } from "./ItemLayoutCache";
 
-export const ItemLayoutCacheSetter: React.FC<IProps> = (props: IProps) => {
+export const ItemLayoutCacheSetter: React.FC<IProps> = (props) => {
   const { item, itemLayoutCache } = props;
   const [, forceUpdate] = useReducer(x => x + 1, 0);
 
