@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, TextInput, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, TextInput, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
 import { LoadingModal } from "../../common/components/LoadingModal";
 import { Logo } from "../../common/components/Logo";
@@ -72,7 +72,7 @@ export const LoginPage: React.FC<Props> = (props) => {
   const { width, height } = useWindowDimensions();
 
   const scrollStyle: ViewStyle = {
-    height,
+    height: height - (StatusBar.currentHeight || 0),
     width
   };
 

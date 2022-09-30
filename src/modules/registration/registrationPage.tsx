@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { BackHandler, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { BackHandler, Image, ImageBackground, ImageStyle, Keyboard, ScrollView, StatusBar, TextInput, TouchableOpacity, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
@@ -109,7 +109,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   }
 
   const scrollStyle: ViewStyle = {
-    height,
+    height: height - (StatusBar.currentHeight || 0),
     width
   };
 
