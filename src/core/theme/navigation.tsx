@@ -1,13 +1,10 @@
 import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
-import { CommonActions, StackNavigationState } from "@react-navigation/native"
 import { StackNavigationOptions } from "@react-navigation/stack"
 import React, { useEffect, useState } from "react"
-import { Image, StyleProp, TouchableOpacity, View, ViewStyle } from "react-native"
+import { Image, TouchableOpacity, View, ViewStyle } from "react-native"
 import { ImageResources } from "../../common/ImageResources.g"
 import { styleSheetCreate } from "../../common/utils"
-import { RootStackParamList } from "../../navigation/RootNavigation"
 import { Colors } from "./colors"
-import { CommonStyles } from "./commonStyles"
 import { Fonts } from "./fonts"
 
 export const headerOptions: StackNavigationOptions = {
@@ -42,9 +39,8 @@ export const shopsHeader = ({ state, descriptors, navigation }: MaterialTopTabBa
             const icon = options.tabBarIcon ? options.tabBarIcon({ focused: isFocused, color }) : (<View />)
 
             const onPress = () => {
-              if (!isFocused) {
+              if (!isFocused)
                 navigation.navigate({ name: route.name, params: {}, merge: true });
-              }
             };
 
             return (
@@ -94,6 +90,8 @@ const tabStyles = styleSheetCreate({
     paddingVertical: 3
   } as ViewStyle,
   tabButton: {
+    aspectRatio: 2.5 / 1,
+    height: 24,
     borderRadius: 30,
     paddingHorizontal: 12,
     paddingVertical: 4

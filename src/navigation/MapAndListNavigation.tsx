@@ -98,6 +98,10 @@ const styles = styleSheetCreate({
   button: {
     margin: 8
   } as ViewStyle,
+  tabIcon: {
+    height: 20,
+    alignSelf: "center"
+  } as ImageStyle
 });
 
 const goToLoginPage = (state: StackNavigationState<RootStackParamList>): CommonActions.Action => {
@@ -112,12 +116,12 @@ const goToLoginPage = (state: StackNavigationState<RootStackParamList>): CommonA
 
 const mapIcon = (): React.ReactNode => {
   return (
-    <Image source={IconsResources.icon_map} />
+    <Image source={IconsResources.icon_map} resizeMode={"contain"} style={styles.tabIcon} />
   )
 };
 
 const listIcon = (): React.ReactNode => {
   return (
-    <Image source={IconsResources.icon_list} />
+    <Image source={IconsResources.icon_list} resizeMode={"contain"} style={styles.tabIcon} />
   )
 };
