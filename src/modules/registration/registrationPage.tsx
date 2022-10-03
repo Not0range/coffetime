@@ -17,8 +17,9 @@ import { useAppDispatch, useAppSelector } from "../../core/store/hooks";
 import { Colors, CommonStyles } from "../../core/theme";
 import { user_picture } from "../../core/theme/themeDependencies";
 import { RootStackParamList } from "../../navigation/RootNavigation";
-import { IAuthParams, registerAsync, resetError } from "../login/loginSlice";
+import { IAuthParams, registerAsync, resetError, setErrorSource } from "../login/loginSlice";
 import Toast from "react-native-simple-toast";
+import { AuthHelper } from "../../common/helpers/authHelper";
 
 type Props = StackScreenProps<RootStackParamList, "Registration">;
 
@@ -59,8 +60,23 @@ export const RegistrationPage: React.FC<Props> = (props) => {
 
   const nextPage = () => {
     if (email && password) {
-      Keyboard.dismiss();
-      animatedValue.value = withTiming(1);
+      try {
+        AuthHelper.checkAuthParams({ email, password });
+        Keyboard.dismiss();
+        animatedValue.value = withTiming(1);
+      }
+      catch (error: any) {
+        const errors: string[] = error.message.filter((i: string | null) => i != null);
+        const emailError = errors.some((i: string) => i == localization.errors.invalidEmail);
+        const passwordError = errors.some((i: string) => i == localization.errors.invalidPassword);
+        const errorSource = emailError && passwordError
+          ? "both"
+          : emailError
+            ? "email"
+            : "password";
+        dispatch(setErrorSource(errorSource));
+        Toast.show(errors.join("\n"));
+      }
     }
     else
       Toast.show(localization.errors.fildsMustBeFilled);

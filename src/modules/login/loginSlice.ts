@@ -33,6 +33,9 @@ const loginSlice = createSlice({
     resetError: (state) => {
       state.error = "";
       state.errorSource = null;
+    },
+    setErrorSource: (state, action: PayloadAction<ErrorSource>) => {
+      state.errorSource = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -125,5 +128,5 @@ export const registerAsync = createAsyncThunk<string, SignInRequestDto>(
   }
 );
 
-export const { resetError } = loginSlice.actions;
+export const { resetError, setErrorSource } = loginSlice.actions;
 export default loginSlice.reducer;
