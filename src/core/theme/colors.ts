@@ -15,6 +15,7 @@ export class Colors {
   static grayB = "#BBBBBB";
   static grayEA = "#BBBBBB";
   static gray47 = "#474747";
+  static grayAE = "#AEAEAE";
 
   static loginGradient = "#F3E9D8";
   static cafeGradient = "#F7ECDA";

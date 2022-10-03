@@ -2,7 +2,7 @@ import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import React, { useEffect, useState } from "react";
 import { Image, ImageStyle, Linking, Platform, Text, TextStyle, TouchableOpacity, View, ViewStyle } from "react-native";
 import { IconsResources } from "../../common/ImageResources.g";
-import { CommonStyles, Fonts } from "../../core/theme";
+import { Colors, CommonStyles, Fonts } from "../../core/theme";
 import { ShopsStackParamList } from "../../navigation/MapAndListNavigation";
 import MapboxGL from "@rnmapbox/maps";
 import Geolocation from '@react-native-community/geolocation';
@@ -182,7 +182,7 @@ export const Map: React.FC<Props> = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={distansePress}>
-            <Text>{locatingVisible ? `${distance} ${"м"} = ${time} ${"минут"}` : null}</Text>
+            <Text style={styles.distance}>{locatingVisible ? `${distance} ${"м"} = ${time} ${"минут"}` : null}</Text>
           </TouchableOpacity>
         </View>
       </Animated.View>
@@ -224,11 +224,12 @@ const styles = styleSheetCreate({
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 22,
-    marginBottom: 14
+    marginBottom: 14,
+    color: Colors.gray47
   } as TextStyle,
   distance: {
     fontFamily: Fonts.light,
     fontSize: 16,
-    color: "#AEAEAE"
+    color: Colors.grayAE
   } as TextStyle,
 })

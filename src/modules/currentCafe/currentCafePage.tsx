@@ -111,7 +111,6 @@ export const CurrentCafePage: React.FC<Props> = (props) => {
         tryAgain={loadData}
         EmptyComponent={() => null}
         style={CommonStyles.flex1}
-        contentContainerStyle={styles.grid}
       />
     </View>
   )
@@ -122,9 +121,6 @@ function keyExtractor(items: Product[]): string {
 }
 
 const styles = styleSheetCreate({
-  grid: {
-    paddingHorizontal: 4
-  } as ViewStyle,
   row: {
     flexDirection: "row",
     aspectRatio: 1.25
@@ -145,12 +141,14 @@ const styles = styleSheetCreate({
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 28,
-    marginHorizontal: 6
+    marginHorizontal: 6,
+    color: Colors.gray47
   } as TextStyle,
   address: {
     fontFamily: Fonts.regular,
     fontSize: 18,
-    marginHorizontal: 6
+    marginHorizontal: 6,
+    color: Colors.gray71
   } as TextStyle,
   imageBottom: {
     marginLeft: 10,

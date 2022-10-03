@@ -48,7 +48,7 @@ export const CurrentDrinkPage: React.FC = () => {
   const orderPress = () => {
     if (!currentDrinkFull || !currentDrink) return;
 
-    dispatch(addToOrder({drink: currentDrinkFull, product: currentDrink}));
+    dispatch(addToOrder({ drink: currentDrinkFull, product: currentDrink }));
     Toast.show(localization.cafe.addedToOrder);
   };
 
@@ -86,7 +86,7 @@ export const CurrentDrinkPage: React.FC = () => {
   };
 
   return (
-    <View style={CommonStyles.flexWhiteBackground}>
+    <View style={CommonStyles.flex1}>
       <LoadingView style={CommonStyles.flex1} isLoading={loading} />
       {!loading ?
         <View style={CommonStyles.flex1}>
@@ -160,6 +160,7 @@ const styles = styleSheetCreate({
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 24,
+    color: Colors.gray47,
     marginRight: 8
   } as TextStyle,
   attributesRow: {
