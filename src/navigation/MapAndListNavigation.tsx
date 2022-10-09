@@ -99,7 +99,7 @@ const styles = styleSheetCreate({
     margin: 8
   } as ViewStyle,
   tabIcon: {
-    height: 20,
+    height: 16,
     alignSelf: "center"
   } as ImageStyle
 });

@@ -34,10 +34,9 @@ export const Map: React.FC<Props> = (props) => {
   const sessionId = useAppSelector(state => state.system.authToken);
   const dispatch = useAppDispatch();
 
-  const [userCoords, setUserCoords] = useState([0, 0]);
+  const [userCoords, setUserCoords] = useState<number[]>([]);
   const [cameraCoords, setCameraCoords] = useState([0, 0]);
   const [zoom, setZoom] = useState(0);
-  const [locatingVisible, setLocatingVisible] = useState(false);
   const [selected, setSelected] = useState("");
   const [position, setPosition] = useState(-90);
 
@@ -61,7 +60,6 @@ export const Map: React.FC<Props> = (props) => {
 
   const setUserPosition = (pos: any) => {
     setUserCoords([pos.coords.longitude, pos.coords.latitude]);
-    setLocatingVisible(true);
   };
 
   const mapPress = () => {
@@ -90,8 +88,8 @@ export const Map: React.FC<Props> = (props) => {
       dispatch(getAllCafeAsync(sessionId)).then(result => {
         if (result.meta.requestStatus != "fulfilled") return;
 
-        const coords = cafes.map(t => stringToCoordinates(t.coordinates));
-        const {geometry} = center(turf.points(coords));
+        const coords = (result.payload as Cafe[]).map(t => stringToCoordinates(t.coordinates));
+        const { geometry } = center(turf.points(coords));        
         setCameraCoords(geometry.coordinates);
 
         const zoom = _.max(coords.map(t => calculateDistance(cameraCoords, t, { units: "degrees" }))) || 0;
@@ -159,7 +157,7 @@ export const Map: React.FC<Props> = (props) => {
       >
         <MapboxGL.Camera centerCoordinate={cameraCoords} zoomLevel={zoom} />
 
-        {locatingVisible ? <MapboxGL.MarkerView id={"user_locating"} coordinate={userCoords}>
+        {userCoords.length == 2 ? <MapboxGL.MarkerView id={"user_locating"} coordinate={userCoords}>
           <Image source={IconsResources.icon_locating} />
         </MapboxGL.MarkerView> : null}
 
@@ -182,7 +180,9 @@ export const Map: React.FC<Props> = (props) => {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={distansePress}>
-            <Text style={styles.distance}>{locatingVisible ? `${distance} ${"м"} = ${time} ${"минут"}` : null}</Text>
+            <Text style={styles.distance}>
+              {userCoords.length == 2 ? `${distance} ${"м"} = ${time} ${"минут"}` : null}
+            </Text>
           </TouchableOpacity>
         </View>
       </Animated.View>

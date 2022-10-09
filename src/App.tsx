@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Provider } from "react-redux";
-import { UIManager } from "react-native";
+import { DevSettings, UIManager } from "react-native";
 import { UnhandledError } from "./common/components/UnhandledError";
 import { NavigationContainer } from '@react-navigation/native';
 import { LoadingModal } from "./common/components/LoadingModal";
@@ -36,8 +36,11 @@ export const App: React.FC = () => {
   useEffect(() => {
     if (__DEV__) {
       DevMenu.addItem(
-        "ResetStore",
-        () => resetState(MigrateStoreMode.purge),
+        "Reset Store and Reload",
+        () => {
+          resetState(MigrateStoreMode.purge);
+          DevSettings.reload();
+        },
       );
     }
   }, []);
