@@ -17,14 +17,13 @@ const styles = styleSheetCreate({
   title: {
     fontFamily: Fonts.lobster,
     fontSize: 64,
-    textAlign: "center",
     color: "white"
   } as TextStyle,
   subTitle: {
     fontSize: 16,
     textAlign: "left",
-    marginLeft: 135,
-    marginTop: 65,
+    left: 85,
+    top: 65,
     position: "absolute",
     color: "white"
   } as TextStyle

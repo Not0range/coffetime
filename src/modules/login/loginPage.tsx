@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, TextInput, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, TextInput, TextStyle, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
 import { LoadingModal } from "../../common/components/LoadingModal";
 import { Logo } from "../../common/components/Logo";
@@ -77,11 +77,17 @@ export const LoginPage: React.FC<Props> = (props) => {
   };
 
   return (
-    <ScrollView contentContainerStyle={scrollStyle}>
-      <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
-      <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-        <LinearGradient start={{ x: 0, y: 0.88 }} end={{ x: 0, y: 1 }} colors={[Colors.transparent, Colors.loginGradient]} style={CommonStyles.flex1}>
+    <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
+      <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
+      
+      <LinearGradient
+        start={{ x: 0, y: 0.21 }}
+        end={{ x: 0, y: 1 }}
+        colors={[Colors.transparent, Colors.loginGradient]}
+        style={CommonStyles.flex1}
+      >
+        <ScrollView contentContainerStyle={scrollStyle}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={CommonStyles.flex1}>
               <View style={CommonStyles.flex1} />
@@ -91,6 +97,7 @@ export const LoginPage: React.FC<Props> = (props) => {
               <KeyboardAvoidingView style={styles.loginContainer}>
                 <AuthTextInput
                   label={localization.login.email}
+                  defaultColor={Colors.white}
                   containerStyle={styles.input}
                   keyboardType={"email-address"}
                   value={email}
@@ -103,6 +110,7 @@ export const LoginPage: React.FC<Props> = (props) => {
                 />
                 <AuthTextInput
                   inputRef={passwordRef}
+                  defaultColor={Colors.white}
                   label={localization.login.password}
                   containerStyle={styles.input}
                   keyboardType={"default"}
@@ -118,6 +126,8 @@ export const LoginPage: React.FC<Props> = (props) => {
                   onIconPress={passwordIconPress}
                   isError={errorSource == "password" || errorSource == "both"}
                 />
+              </KeyboardAvoidingView>
+              <View style={styles.buttonsContainer}>
                 <MainButton
                   type={ButtonType.Action}
                   title={localization.login.login}
@@ -130,12 +140,12 @@ export const LoginPage: React.FC<Props> = (props) => {
                   style={styles.button}
                   onPress={registration}
                 />
-              </KeyboardAvoidingView>
+              </View>
             </View>
           </TouchableWithoutFeedback>
-        </LinearGradient>
-      </ImageBackground>
-    </ScrollView>
+        </ScrollView>
+      </LinearGradient>
+    </ImageBackground>
   )
 }
 
@@ -157,14 +167,11 @@ const styles = styleSheetCreate({
   } as ViewStyle,
   logoContainer: {
     flex: 1,
-    padding: 40,
-    justifyContent: "flex-start",
-    alignContent: "flex-end"
+    alignItems: "center"
   } as ViewStyle,
   loginContainer: {
-    flex: 5,
+    flex: 2,
     padding: 40,
-    justifyContent: "center",
     alignContent: "center"
   } as ViewStyle,
   button: {
@@ -180,7 +187,11 @@ const styles = styleSheetCreate({
     marginHorizontal: 16,
     marginTop: 30,
     paddingHorizontal: 4,
-    backgroundColor: Colors.white88,
-    borderRadius: 10
-  } as ViewStyle
+    borderBottomColor: Colors.whiteBorder
+  } as ViewStyle,
+  buttonsContainer: {
+    flex: 2,
+    padding: 40,
+    justifyContent: "center"
+  } as ViewStyle,
 });

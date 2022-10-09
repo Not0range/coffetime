@@ -6,6 +6,7 @@ import { styleSheetCreate, styleSheetFlatten } from "../utils";
 
 
 interface IProps extends TextInputProps {
+  defaultColor?: string;
   label: string;
   icon?: ImageURISource;
   iconStyle?: ImageStyle;
@@ -17,7 +18,8 @@ interface IProps extends TextInputProps {
 
 export const AuthTextInput: React.FC<IProps> = (props) => {
   const [isFocused, setIsFocused] = useState(false);
-  const { label, isError, containerStyle, ...p } = props;
+  const { label, isError, containerStyle, defaultColor, ...p } = props;
+  const color = defaultColor || Colors.black;
 
   const animatedValue = useSharedValue(props.value == "" ? 0 : 1);
 
@@ -32,7 +34,8 @@ export const AuthTextInput: React.FC<IProps> = (props) => {
     left: isIos ? 5 : 7,
     top: interpolate(animatedValue.value, [0, 1], [18, 0]),
     fontSize: interpolate(animatedValue.value, [0, 1], [20, 14]),
-    color: isError ? Colors.paleRed : Colors.black,
+    color: isError ? Colors.paleRed : color,
+    fontFamily: Fonts.light
   }));
   const container = styleSheetFlatten(
     [isError && isFocused
@@ -64,7 +67,7 @@ export const AuthTextInput: React.FC<IProps> = (props) => {
       </Animated.Text>
       <TextInput
         ref={props.inputRef}
-        style={styles.input}
+        style={styleSheetFlatten(styles.input, { color })}
         onFocus={handleFocus}
         onBlur={handleBlur}
         underlineColorAndroid={Colors.transparent}
@@ -101,7 +104,7 @@ const styles = styleSheetCreate({
   input: {
     flex: 1,
     fontSize: 20,
-    fontFamily: Fonts.regular,
+    fontFamily: Fonts.light,
     color: Colors.black,
   } as TextStyle,
   icon: {

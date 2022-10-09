@@ -3,6 +3,7 @@ export class Colors {
   static white = "#FFFFFF";
   static white88 = "#F5FCFF88";
   static whiteTwo = "#ebebeb";
+  static whiteBorder = "#FFFFFF47"
   static transparent = "transparent";
   
   static paleRed = "#d34744";

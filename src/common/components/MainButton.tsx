@@ -27,7 +27,7 @@ export const MainButton: React.FC<IProps> = (props) => {
       onPress={props.onPress}
     >
       {props.icon ? <Image source={props.icon} style={styleSheetFlatten(styles.icon, props.iconStyle)} /> : null}
-      {props.title ? <Text style={styles.title}>{props.title}</Text> : null}
+      {props.title ? <Text style={styleSheetFlatten(styles.title, props.titleStyle)}>{props.title}</Text> : null}
     </TouchableOpacity>
   )
 }

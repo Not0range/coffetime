@@ -34,7 +34,7 @@ const loginSlice = createSlice({
       state.error = "";
       state.errorSource = null;
     },
-    setErrorSource: (state, action: PayloadAction<ErrorSource>) => {
+    setErrorSource: (state, action: PayloadAction<ErrorSource | null>) => {
       state.errorSource = action.payload;
     }
   },
