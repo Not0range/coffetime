@@ -89,7 +89,7 @@ export const Map: React.FC<Props> = (props) => {
         if (result.meta.requestStatus != "fulfilled") return;
 
         const coords = (result.payload as Cafe[]).map(t => stringToCoordinates(t.coordinates));
-        const { geometry } = center(turf.points(coords));        
+        const { geometry } = center(turf.points(coords));
         setCameraCoords(geometry.coordinates);
 
         const zoom = _.max(coords.map(t => calculateDistance(cameraCoords, t, { units: "degrees" }))) || 0;
@@ -115,9 +115,9 @@ export const Map: React.FC<Props> = (props) => {
         }, error => {
           if (error.code == 1 && timerId)
             clearInterval(timerId);
-        });
+        }, { maximumAge: 0, timeout: 3000 });
       }, 3000)
-    });
+    }, { maximumAge: 0, timeout: 3000 });
     return () => { if (timerId) clearInterval(timerId) }
   }, []);
 
