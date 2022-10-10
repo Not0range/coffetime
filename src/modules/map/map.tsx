@@ -142,7 +142,7 @@ export const Map: React.FC<Props> = (props) => {
 
   const selectedCafe = cafes?.find(t => t.id == selected);
 
-  const distance = selectedCafe ?
+  const distance = selectedCafe && userCoords.length == 2 ?
     Math.ceil(calculateDistance(userCoords, stringToCoordinates(selectedCafe.coordinates), { units: "meters" })) :
     0;
   const time = Math.ceil(distance / 60);
