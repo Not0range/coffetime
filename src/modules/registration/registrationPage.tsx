@@ -31,6 +31,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   const [isSecureEnabled, setIsSecureEnabled] = useState(true);
   const [uri, setUri] = useState("");
   const passwordRef = useRef<TextInput>(null);
+  const [registerPromise, setRegisterPromise] = useState<any>(null);
 
   const { width, height } = useWindowDimensions();
 
@@ -89,7 +90,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   const register = () => {
     if (email && password && name) {
       Keyboard.dismiss();
-      dispatch(registerAsync({ email, password }))
+      const promise = dispatch(registerAsync({ email, password }))
         .then(result => {
           if (result.meta.requestStatus == "fulfilled")
             props.navigation.dispatch(goToMainPage);
@@ -98,9 +99,14 @@ export const RegistrationPage: React.FC<Props> = (props) => {
             animatedValue.value = withTiming(0);
           }
         });
+      setRegisterPromise(promise);
     }
     else
       Toast.show(localization.errors.fildsMustBeFilled);
+  };
+
+  const cancelRegister = () => {
+    registerPromise.abort();
   };
 
   const goBack = () => {
@@ -129,7 +135,7 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   }
 
   const scrollStyle: ViewStyle = {
-    height: height - (StatusBar.currentHeight || 0),
+    height,
     width
   };
 
@@ -139,17 +145,16 @@ export const RegistrationPage: React.FC<Props> = (props) => {
   })
 
   return (
+    <ScrollView contentContainerStyle={scrollStyle}>
+      <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
+        <LoadingModal isLoading={loading} onPress={cancelRegister} onRequestClose={cancelRegister} />
 
-    <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-      <LoadingModal isLoading={loading} />
-
-      <LinearGradient
-        start={{ x: 0, y: 0.21 }}
-        end={{ x: 0, y: 1 }}
-        colors={[Colors.transparent, Colors.loginGradient]}
-        style={CommonStyles.flex1}
-      >
-        <ScrollView contentContainerStyle={scrollStyle}>
+        <LinearGradient
+          start={{ x: 0, y: 0.21 }}
+          end={{ x: 0, y: 1 }}
+          colors={[Colors.transparent, Colors.loginGradient]}
+          style={CommonStyles.flex1}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <Animated.ScrollView style={mainContainerStyle} horizontal>
               <View style={pageStyle}>
@@ -254,9 +259,9 @@ export const RegistrationPage: React.FC<Props> = (props) => {
               </View>
             </Animated.ScrollView>
           </TouchableWithoutFeedback>
-        </ScrollView>
-      </LinearGradient>
-    </ImageBackground>
+        </LinearGradient>
+      </ImageBackground>
+    </ScrollView>
   )
 };
 

@@ -1,7 +1,7 @@
 import { CommonActions, StackNavigationState } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { ImageBackground, Keyboard, KeyboardAvoidingView, ScrollView, StatusBar, TextInput, TextStyle, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
+import { ImageBackground, Keyboard, ScrollView, TextInput, TouchableWithoutFeedback, useWindowDimensions, View, ViewStyle } from "react-native";
 import { AuthTextInput } from "../../common/components/AuthTextInput";
 import { LoadingModal } from "../../common/components/LoadingModal";
 import { Logo } from "../../common/components/Logo";
@@ -72,29 +72,28 @@ export const LoginPage: React.FC<Props> = (props) => {
   const { width, height } = useWindowDimensions();
 
   const scrollStyle: ViewStyle = {
-    height: height - (StatusBar.currentHeight || 0),
+    height,
     width
   };
 
   return (
+    <ScrollView contentContainerStyle={scrollStyle}>
+      <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
+        <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
 
-    <ImageBackground source={SplashResources.splash} style={styles.background} resizeMode={"cover"}>
-      <LoadingModal isLoading={loadingState} onPress={cancelLogin} onRequestClose={cancelLogin} />
-      
-      <LinearGradient
-        start={{ x: 0, y: 0.21 }}
-        end={{ x: 0, y: 1 }}
-        colors={[Colors.transparent, Colors.loginGradient]}
-        style={CommonStyles.flex1}
-      >
-        <ScrollView contentContainerStyle={scrollStyle}>
+        <LinearGradient
+          start={{ x: 0, y: 0.21 }}
+          end={{ x: 0, y: 1 }}
+          colors={[Colors.transparent, Colors.loginGradient]}
+          style={CommonStyles.flex1}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={CommonStyles.flex1}>
-              <View style={CommonStyles.flex1} />
               <View style={styles.logoContainer}>
+                <View style={CommonStyles.flex1} />
                 <Logo />
               </View>
-              <KeyboardAvoidingView style={styles.loginContainer}>
+              <View style={styles.loginContainer}>
                 <AuthTextInput
                   label={localization.login.email}
                   defaultColor={Colors.white}
@@ -126,7 +125,7 @@ export const LoginPage: React.FC<Props> = (props) => {
                   onIconPress={passwordIconPress}
                   isError={errorSource == "password" || errorSource == "both"}
                 />
-              </KeyboardAvoidingView>
+              </View>
               <View style={styles.buttonsContainer}>
                 <MainButton
                   type={ButtonType.Action}
@@ -143,9 +142,9 @@ export const LoginPage: React.FC<Props> = (props) => {
               </View>
             </View>
           </TouchableWithoutFeedback>
-        </ScrollView>
-      </LinearGradient>
-    </ImageBackground>
+        </LinearGradient>
+      </ImageBackground>
+    </ScrollView>
   )
 }
 
@@ -166,11 +165,11 @@ const styles = styleSheetCreate({
     overflow: "scroll"
   } as ViewStyle,
   logoContainer: {
-    flex: 1,
+    flex: 2,
     alignItems: "center"
   } as ViewStyle,
   loginContainer: {
-    flex: 2,
+    flex: 3,
     padding: 40,
     alignContent: "center"
   } as ViewStyle,
